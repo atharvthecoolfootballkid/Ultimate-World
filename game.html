@@ -1,2128 +1,2544 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta name="theme-color" content="#05060b">
-<title>Ultimate World — Game</title>
-
-<style>
-:root{
-    --bg:#05060b;
-    --panel:#0b0d15;
-    --panel2:#10131e;
-    --line:rgba(255,255,255,.09);
-    --text:#fff;
-    --muted:#788196;
-    --purple:#7657ff;
-    --blue:#00d9ff;
-    --pink:#ff4fcf;
-    --green:#24e39a;
-    --yellow:#ffd45a;
-}
-
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-    width:100%;
-    height:100%;
-    margin:0;
-    overflow:hidden;
-    background:var(--bg);
-    color:#fff;
-    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-
-button{
-    font:inherit;
-    cursor:pointer;
-}
-
-button:focus-visible{
-    outline:2px solid var(--blue);
-}
-
-/* =====================================================
-   APP
-===================================================== */
-
-#app{
-    width:100%;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-}
-
-/* =====================================================
-   TOP BAR
-===================================================== */
-
-.game-top{
-    height:68px;
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    gap:13px;
-    padding:10px 18px;
-    border-bottom:1px solid var(--line);
-    background:rgba(5,6,11,.88);
-    backdrop-filter:blur(20px);
-    z-index:50;
-}
-
-.back-btn,
-.icon-btn{
-    width:42px;
-    height:42px;
-    display:grid;
-    place-items:center;
-    color:#fff;
-    border:1px solid var(--line);
-    border-radius:12px;
-    background:rgba(255,255,255,.045);
-}
-
-.back-btn:hover,
-.icon-btn:hover{
-    background:rgba(255,255,255,.09);
-}
-
-.game-title{
-    min-width:0;
-}
-
-.game-title small{
-    display:block;
-    color:var(--blue);
-    font-size:7px;
-    font-weight:950;
-    letter-spacing:.16em;
-}
-
-.game-title strong{
-    display:block;
-    margin-top:3px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    font-size:14px;
-}
-
-.top-spacer{
-    flex:1;
-}
-
-.top-actions{
-    display:flex;
-    gap:7px;
-}
-
-/* =====================================================
-   GAME AREA
-===================================================== */
-
-.game-stage{
-    position:relative;
-    flex:1;
-    min-height:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:15px;
-    background:
-        radial-gradient(circle at 50% 40%,rgba(118,87,255,.08),transparent 38%),
-        #05060b;
-}
-
-/* actual game container */
-
-.game-screen{
-    position:relative;
-    width:min(1200px,100%);
-    height:100%;
-    max-height:760px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.11);
-    border-radius:22px;
-    background:
-        radial-gradient(circle at 50% 30%,rgba(0,217,255,.09),transparent 30%),
-        linear-gradient(145deg,#0c0f19,#07080e);
-    box-shadow:
-        0 30px 90px rgba(0,0,0,.4),
-        inset 0 0 80px rgba(118,87,255,.04);
-}
-
-/* =====================================================
-   HUD
-===================================================== */
-
-.hud{
-    position:absolute;
-    left:16px;
-    right:16px;
-    top:15px;
-    z-index:20;
-    display:flex;
-    justify-content:space-between;
-    pointer-events:none;
-}
-
-.hud-left,
-.hud-right{
-    display:flex;
-    gap:8px;
-}
-
-.hud-box{
-    min-width:80px;
-    padding:8px 11px;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:11px;
-    background:rgba(5,6,11,.72);
-    backdrop-filter:blur(12px);
-}
-
-.hud-box small{
-    display:block;
-    color:#6e788e;
-    font-size:6px;
-    font-weight:950;
-    letter-spacing:.12em;
-}
-
-.hud-box strong{
-    display:block;
-    margin-top:3px;
-    font-size:14px;
-}
-
-/* =====================================================
-   GAME CANVAS
-===================================================== */
-
-#gameCanvas{
-    width:100%;
-    height:100%;
-    display:block;
-}
-
-/* =====================================================
-   START SCREEN
-===================================================== */
-
-.start-screen{
-    position:absolute;
-    inset:0;
-    z-index:30;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:30px;
-    background:
-        radial-gradient(circle at 50% 45%,rgba(118,87,255,.18),transparent 30%),
-        rgba(5,6,11,.72);
-    backdrop-filter:blur(8px);
-}
-
-.start-card{
-    width:min(540px,100%);
-    padding:35px;
-    text-align:center;
-    border:1px solid rgba(255,255,255,.11);
-    border-radius:24px;
-    background:rgba(11,13,21,.88);
-    box-shadow:0 30px 80px rgba(0,0,0,.35);
-}
-
-.game-logo{
-    width:92px;
-    height:92px;
-    margin:0 auto 20px;
-    display:grid;
-    place-items:center;
-    border-radius:27px;
-    font-size:45px;
-    background:
-        linear-gradient(135deg,rgba(118,87,255,.35),rgba(0,217,255,.14));
-    border:1px solid rgba(255,255,255,.12);
-    box-shadow:0 20px 45px rgba(118,87,255,.18);
-}
-
-.start-card small{
-    color:var(--blue);
-    font-size:8px;
-    font-weight:950;
-    letter-spacing:.18em;
-}
-
-.start-card h1{
-    margin:9px 0 10px;
-    font-size:42px;
-    line-height:.95;
-    letter-spacing:-.06em;
-}
-
-.start-card p{
-    margin:0 auto;
-    max-width:420px;
-    color:#7b8599;
-    font-size:11px;
-    line-height:1.65;
-}
-
-.start-buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:9px;
-    margin-top:24px;
-}
-
-.primary{
-    min-height:45px;
-    padding:0 20px;
-    color:#fff;
-    border:0;
-    border-radius:12px;
-    background:linear-gradient(135deg,var(--purple),#4b91ff);
-    font-size:10px;
-    font-weight:950;
-    box-shadow:0 15px 35px rgba(118,87,255,.25);
-}
-
-.secondary{
-    min-height:45px;
-    padding:0 18px;
-    color:#fff;
-    border:1px solid var(--line);
-    border-radius:12px;
-    background:rgba(255,255,255,.045);
-    font-size:10px;
-    font-weight:900;
-}
-
-/* =====================================================
-   PAUSE
-===================================================== */
-
-.pause-overlay,
-.result-overlay{
-    position:absolute;
-    inset:0;
-    z-index:40;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:25px;
-    background:rgba(5,6,11,.72);
-    backdrop-filter:blur(12px);
-}
-
-.pause-card,
-.result-card{
-    width:min(450px,100%);
-    padding:30px;
-    text-align:center;
-    border:1px solid var(--line);
-    border-radius:22px;
-    background:rgba(11,13,21,.94);
-}
-
-.pause-card h2,
-.result-card h2{
-    margin:0 0 8px;
-    font-size:30px;
-}
-
-.pause-card p,
-.result-card p{
-    color:#7c869a;
-    font-size:10px;
-    line-height:1.6;
-}
-
-.overlay-buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:20px;
-}
-
-/* =====================================================
-   MOBILE CONTROLS
-===================================================== */
-
-.mobile-controls{
-    position:absolute;
-    inset:0;
-    z-index:15;
-    pointer-events:none;
-    display:none;
-}
-
-.control{
-    position:absolute;
-    width:62px;
-    height:62px;
-    display:grid;
-    place-items:center;
-    color:#fff;
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:18px;
-    background:rgba(255,255,255,.07);
-    backdrop-filter:blur(10px);
-    pointer-events:auto;
-    user-select:none;
-    touch-action:none;
-    font-size:20px;
-}
-
-.control:active{
-    transform:scale(.93);
-    background:rgba(118,87,255,.3);
-}
-
-.left-control{
-    left:20px;
-    bottom:25px;
-}
-
-.right-control{
-    left:95px;
-    bottom:25px;
-}
-
-.action-control{
-    right:25px;
-    bottom:25px;
-}
-
-.action-control.two{
-    right:100px;
-}
-
-/* =====================================================
-   BOTTOM BAR
-===================================================== */
-
-.game-bottom{
-    height:52px;
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:7px;
-    border-top:1px solid var(--line);
-    background:rgba(5,6,11,.88);
-}
-
-.bottom-btn{
-    min-height:32px;
-    padding:0 12px;
-    color:#788296;
-    border:1px solid transparent;
-    border-radius:9px;
-    background:transparent;
-    font-size:8px;
-    font-weight:900;
-}
-
-.bottom-btn:hover{
-    color:#fff;
-    background:rgba(255,255,255,.05);
-}
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:75px;
-    z-index:100;
-    transform:translate(-50%,20px);
-    opacity:0;
-    pointer-events:none;
-    padding:11px 16px;
-    border:1px solid var(--line);
-    border-radius:11px;
-    color:#fff;
-    background:rgba(11,13,21,.94);
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
-    font-size:9px;
-    font-weight:850;
-    transition:.25s ease;
-}
-
-.toast.show{
-    opacity:1;
-    transform:translate(-50%,0);
-}
-
-/* =====================================================
-   SETTINGS
-===================================================== */
-
-.settings-panel{
-    position:absolute;
-    top:58px;
-    right:10px;
-    z-index:60;
-    width:260px;
-    display:none;
-    padding:16px;
-    border:1px solid var(--line);
-    border-radius:15px;
-    background:rgba(11,13,21,.97);
-    box-shadow:0 20px 60px rgba(0,0,0,.4);
-}
-
-.settings-panel.open{
-    display:block;
-}
-
-.settings-panel h3{
-    margin:0 0 14px;
-    font-size:13px;
-}
-
-.setting-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    padding:11px 0;
-    border-top:1px solid rgba(255,255,255,.06);
-}
-
-.setting-row span{
-    color:#7b8599;
-    font-size:9px;
-}
-
-.toggle{
-    width:38px;
-    height:21px;
-    padding:2px;
-    border:0;
-    border-radius:99px;
-    background:#292d39;
-}
-
-.toggle span{
-    display:block;
-    width:17px;
-    height:17px;
-    border-radius:50%;
-    background:#fff;
-    transition:.2s;
-}
-
-.toggle.on{
-    background:var(--purple);
-}
-
-.toggle.on span{
-    transform:translateX(17px);
-}
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media(max-width:700px){
-
-    .game-top{
-        height:59px;
-        padding:8px 10px;
-    }
-
-    .game-title strong{
-        font-size:12px;
-    }
-
-    .game-stage{
-        padding:5px;
-    }
-
-    .game-screen{
-        border-radius:14px;
-    }
-
-    .hud{
-        left:8px;
-        right:8px;
-        top:8px;
-    }
-
-    .hud-box{
-        min-width:65px;
-        padding:7px 8px;
-    }
-
-    .hud-box strong{
-        font-size:12px;
-    }
-
-    .mobile-controls{
-        display:block;
-    }
-
-    .game-bottom{
-        height:46px;
-    }
-
-    .bottom-btn{
-        padding:0 8px;
-        font-size:7px;
-    }
-
-    .start-card{
-        padding:25px 18px;
-    }
-
-    .start-card h1{
-        font-size:33px;
-    }
-
-    .game-logo{
-        width:72px;
-        height:72px;
-        font-size:34px;
-    }
-
-}
-
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
-
-@media(prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-        animation:none!important;
-        transition:none!important;
-    }
-
-}
-</style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080b18"
+    >
+
+    <meta
+        name="description"
+        content="Ultimate World Game Arena"
+    >
+
+    <title>Ultimate World — Game Arena</title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(90, 70, 255, .22),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(0, 220, 255, .15),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(255, 40, 180, .12),
+                    transparent 30%
+                ),
+                #060814;
+        }
+
+
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: .28;
+            animation: floatOrb 12s ease-in-out infinite;
+        }
+
+        .orb.one {
+            width: 300px;
+            height: 300px;
+            background: #6448ff;
+            left: -100px;
+            top: 10%;
+        }
+
+        .orb.two {
+            width: 250px;
+            height: 250px;
+            background: #00d9ff;
+            right: -80px;
+            top: 35%;
+            animation-delay: -4s;
+        }
+
+        .orb.three {
+            width: 220px;
+            height: 220px;
+            background: #ff35b8;
+            left: 40%;
+            bottom: -100px;
+            animation-delay: -8s;
+        }
+
+        @keyframes floatOrb {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(30px, -35px, 0);
+            }
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .app {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .topbar {
+
+            height: 74px;
+
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            padding:
+                10px 18px;
+
+            background:
+                rgba(8, 11, 24, .78);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            box-shadow:
+                0 12px 40px
+                rgba(0,0,0,.25);
+
+        }
+
+
+        .back-button {
+
+            width: 46px;
+            height: 46px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.1);
+
+            background:
+                rgba(255,255,255,.06);
+
+            color: white;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+            transition:
+                .2s ease;
+
+        }
+
+        .back-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            background:
+                rgba(255,255,255,.12);
+
+        }
+
+
+        .game-title-area {
+
+            min-width: 0;
+            flex: 1;
+
+        }
+
+        .game-title {
+
+            font-size: 20px;
+            font-weight: 900;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
+
+        .game-category {
+
+            margin-top: 3px;
+
+            color:
+                rgba(255,255,255,.55);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .stat {
+
+            min-width: 75px;
+
+            padding:
+                8px 12px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            text-align: center;
+
+        }
+
+        .stat-label {
+
+            display: block;
+
+            font-size: 9px;
+
+            color:
+                rgba(255,255,255,.45);
+
+            font-weight: 800;
+
+            letter-spacing:
+                1px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+        .stat-value {
+
+            display: block;
+
+            margin-top: 2px;
+
+            font-size: 16px;
+
+            font-weight: 950;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            flex: 1;
+
+            min-height: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+        }
+
+
+        .game-shell {
+
+            width: min(
+                1200px,
+                100%
+            );
+
+            height: 100%;
+
+            max-height: 850px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+
+        }
+
+
+        /* =====================================================
+           GAME HUD
+        ===================================================== */
+
+        .hud {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+        }
+
+
+        .hud-left,
+        .hud-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .pill {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                8px 13px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+        }
+
+
+        .pill-icon {
+
+            font-size: 15px;
+
+        }
+
+
+        /* =====================================================
+           CANVAS FRAME
+        ===================================================== */
+
+        .game-frame {
+
+            position: relative;
+
+            flex: 1;
+
+            min-height: 300px;
+
+            border-radius: 26px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.075),
+                    rgba(255,255,255,.025)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            box-shadow:
+                0 30px 90px
+                rgba(0,0,0,.42),
+                inset 0 1px 0
+                rgba(255,255,255,.08);
+
+        }
+
+
+        canvas {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+        }
+
+
+        /* =====================================================
+           GAME OVERLAY
+        ===================================================== */
+
+        .overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 25px;
+
+            background:
+                rgba(3,5,14,.72);
+
+            backdrop-filter:
+                blur(16px);
+
+            -webkit-backdrop-filter:
+                blur(16px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                .25s ease;
+
+        }
+
+
+        .overlay.visible {
+
+            opacity: 1;
+
+            pointer-events: auto;
+
+        }
+
+
+        .panel {
+
+            width:
+                min(
+                    470px,
+                    100%
+                );
+
+            padding: 32px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(31,35,62,.96),
+                    rgba(11,14,29,.96)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            box-shadow:
+                0 35px 100px
+                rgba(0,0,0,.5);
+
+            text-align: center;
+
+        }
+
+
+        .result-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .result-title {
+
+            font-size: 32px;
+
+            font-weight: 950;
+
+        }
+
+
+        .result-subtitle {
+
+            margin-top: 8px;
+
+            color:
+                rgba(255,255,255,.55);
+
+            font-size: 14px;
+
+        }
+
+
+        .result-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+
+            margin:
+                25px 0;
+
+        }
+
+
+        .result-card {
+
+            padding: 15px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+        }
+
+
+        .result-card small {
+
+            display: block;
+
+            color:
+                rgba(255,255,255,.45);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .result-card strong {
+
+            display: block;
+
+            margin-top: 4px;
+
+            font-size: 22px;
+
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .button-row {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+
+        .button {
+
+            flex: 1;
+
+            min-height: 50px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            transition:
+                .2s ease;
+
+        }
+
+
+        .button:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .button.primary {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7657ff,
+                    #b13cff
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(118,87,255,.25);
+
+        }
+
+
+        .button.secondary {
+
+            background:
+                rgba(255,255,255,.07);
+
+            border:
+                1px solid
+                rgba(255,255,255,.1);
+
+        }
+
+
+        /* =====================================================
+           BOTTOM CONTROLS
+        ===================================================== */
+
+        .controls {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+        }
+
+
+        .control-button {
+
+            width: 54px;
+            height: 44px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            color: white;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+        }
+
+
+        .control-button:active {
+
+            transform:
+                scale(.94);
+
+            background:
+                rgba(255,255,255,.13);
+
+        }
+
+
+        /* =====================================================
+           PAUSE
+        ===================================================== */
+
+        .pause-screen {
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 10;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(3,5,14,.7);
+
+            backdrop-filter:
+                blur(15px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                .2s ease;
+
+        }
+
+
+        .pause-screen.visible {
+
+            opacity: 1;
+
+            pointer-events: auto;
+
+        }
+
+
+        .pause-card {
+
+            text-align: center;
+
+            padding: 35px;
+
+        }
+
+
+        .pause-card h2 {
+
+            font-size: 36px;
+
+            font-weight: 950;
+
+        }
+
+
+        .pause-card p {
+
+            margin-top: 7px;
+
+            color:
+                rgba(255,255,255,.5);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 800px){
+
+            .topbar {
+
+                height: 64px;
+
+                padding:
+                    8px 10px;
+
+                gap: 9px;
+
+            }
+
+            .game-title {
+
+                font-size: 16px;
+
+            }
+
+            .game-category {
+
+                font-size: 9px;
+
+            }
+
+            .stat {
+
+                min-width: 58px;
+
+                padding:
+                    6px 8px;
+
+            }
+
+            .stat-label {
+
+                font-size: 8px;
+
+            }
+
+            .stat-value {
+
+                font-size: 13px;
+
+            }
+
+            .main {
+
+                padding:
+                    10px;
+
+            }
+
+            .game-frame {
+
+                border-radius:
+                    19px;
+
+            }
+
+            .hud {
+
+                flex-wrap: wrap;
+
+            }
+
+        }
+
+
+        @media(max-width: 520px){
+
+            .stats .stat:nth-child(3),
+            .stats .stat:nth-child(4){
+
+                display: none;
+
+            }
+
+            .game-shell {
+
+                gap: 8px;
+
+            }
+
+            .panel {
+
+                padding: 24px;
+
+            }
+
+            .result-title {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-<div id="app">
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
 
-    <!-- =================================================
-         TOP BAR
-    ================================================= -->
+    <div class="background">
 
-    <header class="game-top">
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+        <div class="orb three"></div>
 
-        <button
-            class="back-btn"
-            onclick="backToGameVerse()"
-            aria-label="Back"
-        >
-            ←
-        </button>
+    </div>
 
-        <div class="game-title">
 
-            <small>ULTIMATE WORLD • GAMEVERSE</small>
+    <!-- =====================================================
+         APP
+    ====================================================== -->
 
-            <strong id="gameName">
-                Neon Rush
-            </strong>
+    <div class="app">
 
-        </div>
 
-        <div class="top-spacer"></div>
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
 
-        <div class="top-actions">
+        <header class="topbar">
 
             <button
-                class="icon-btn"
-                onclick="toggleFullscreen()"
-                title="Fullscreen"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
             >
-                ⛶
+                ←
             </button>
 
-            <button
-                class="icon-btn"
-                onclick="toggleSettings()"
-                title="Settings"
-            >
-                ⚙
-            </button>
 
-        </div>
+            <div class="game-title-area">
 
-    </header>
-
-
-    <!-- =================================================
-         GAME STAGE
-    ================================================= -->
-
-    <main class="game-stage">
-
-        <section class="game-screen" id="gameScreen">
-
-            <!-- HUD -->
-
-            <div class="hud">
-
-                <div class="hud-left">
-
-                    <div class="hud-box">
-
-                        <small>SCORE</small>
-
-                        <strong id="score">
-                            0
-                        </strong>
-
-                    </div>
-
-                    <div class="hud-box">
-
-                        <small>BEST</small>
-
-                        <strong id="best">
-                            0
-                        </strong>
-
-                    </div>
-
+                <div
+                    class="game-title"
+                    id="gameTitle"
+                >
+                    Ultimate World Game
                 </div>
 
-
-                <div class="hud-right">
-
-                    <div class="hud-box">
-
-                        <small>LEVEL</small>
-
-                        <strong id="level">
-                            1
-                        </strong>
-
-                    </div>
-
-                    <div class="hud-box">
-
-                        <small>TIME</small>
-
-                        <strong id="time">
-                            00:00
-                        </strong>
-
-                    </div>
-
+                <div
+                    class="game-category"
+                    id="gameCategory"
+                >
+                    GAME ARENA
                 </div>
 
             </div>
 
 
-            <!-- GAME CANVAS -->
+            <div class="stats">
 
-            <canvas id="gameCanvas"></canvas>
+                <div class="stat">
+
+                    <span class="stat-label">
+                        Score
+                    </span>
+
+                    <span
+                        class="stat-value"
+                        id="score"
+                    >
+                        0
+                    </span>
+
+                </div>
 
 
-            <!-- START -->
+                <div class="stat">
 
-            <div
-                class="start-screen"
-                id="startScreen"
-            >
+                    <span class="stat-label">
+                        XP
+                    </span>
 
-                <div class="start-card">
+                    <span
+                        class="stat-value"
+                        id="xp"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="stat-label">
+                        Coins
+                    </span>
+
+                    <span
+                        class="stat-value"
+                        id="coins"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="stat-label">
+                        Level
+                    </span>
+
+                    <span
+                        class="stat-value"
+                        id="level"
+                    >
+                        1
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="main">
+
+            <section class="game-shell">
+
+
+                <!-- =========================================
+                     HUD
+                ========================================== -->
+
+                <div class="hud">
+
+                    <div class="hud-left">
+
+                        <div class="pill">
+
+                            <span class="pill-icon">
+                                ❤️
+                            </span>
+
+                            <span id="lives">
+                                3
+                            </span>
+
+                        </div>
+
+
+                        <div class="pill">
+
+                            <span class="pill-icon">
+                                🔥
+                            </span>
+
+                            <span id="combo">
+                                x1
+                            </span>
+
+                        </div>
+
+
+                        <div class="pill">
+
+                            <span class="pill-icon">
+                                ⏱️
+                            </span>
+
+                            <span id="timer">
+                                00:00
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="hud-right">
+
+                        <button
+                            class="control-button"
+                            id="pauseButton"
+                            aria-label="Pause"
+                        >
+                            ⏸
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     GAME
+                ========================================== -->
+
+                <div
+                    class="game-frame"
+                    id="gameFrame"
+                >
+
+                    <canvas
+                        id="gameCanvas"
+                    ></canvas>
+
+
+                    <!-- =====================================
+                         PAUSE
+                    ====================================== -->
 
                     <div
-                        class="game-logo"
-                        id="gameLogo"
+                        class="pause-screen"
+                        id="pauseScreen"
                     >
-                        🏎️
+
+                        <div class="pause-card">
+
+                            <div
+                                style="font-size:55px"
+                            >
+                                ⏸️
+                            </div>
+
+                            <h2>
+                                PAUSED
+                            </h2>
+
+                            <p>
+                                Your game is waiting.
+                            </p>
+
+                            <br>
+
+                            <button
+                                class="button primary"
+                                id="resumeButton"
+                            >
+                                RESUME
+                            </button>
+
+                        </div>
+
                     </div>
 
-                    <small>
-                        ULTIMATE WORLD ORIGINAL
-                    </small>
 
-                    <h1 id="startTitle">
-                        Neon Rush
-                    </h1>
+                    <!-- =====================================
+                         RESULTS
+                    ====================================== -->
 
-                    <p id="startDescription">
-                        Your universal game player is ready.
-                        Start the experience and build your
-                        score.
-                    </p>
+                    <div
+                        class="overlay"
+                        id="resultOverlay"
+                    >
 
-                    <div class="start-buttons">
+                        <div class="panel">
 
-                        <button
-                            class="primary"
-                            onclick="startGame()"
-                        >
-                            ▶ START GAME
-                        </button>
+                            <div
+                                class="result-icon"
+                                id="resultIcon"
+                            >
+                                🏆
+                            </div>
 
-                        <button
-                            class="secondary"
-                            onclick="backToGameVerse()"
-                        >
-                            ← GAMEVERSE
-                        </button>
+                            <div
+                                class="result-title"
+                                id="resultTitle"
+                            >
+                                GAME COMPLETE
+                            </div>
+
+                            <div
+                                class="result-subtitle"
+                                id="resultSubtitle"
+                            >
+                                Great performance.
+                            </div>
+
+
+                            <div class="result-grid">
+
+                                <div class="result-card">
+
+                                    <small>
+                                        Score
+                                    </small>
+
+                                    <strong
+                                        id="resultScore"
+                                    >
+                                        0
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="result-card">
+
+                                    <small>
+                                        XP Earned
+                                    </small>
+
+                                    <strong
+                                        id="resultXP"
+                                    >
+                                        +0
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="result-card">
+
+                                    <small>
+                                        Level
+                                    </small>
+
+                                    <strong
+                                        id="resultLevel"
+                                    >
+                                        1
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="result-card">
+
+                                    <small>
+                                        Time
+                                    </small>
+
+                                    <strong
+                                        id="resultTime"
+                                    >
+                                        00:00
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="button-row">
+
+                                <button
+                                    class="button secondary"
+                                    id="homeButton"
+                                >
+                                    HOME
+                                </button>
+
+                                <button
+                                    class="button primary"
+                                    id="restartButton"
+                                >
+                                    PLAY AGAIN
+                                </button>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
 
+                <!-- =========================================
+                     MOBILE / GAME CONTROLS
+                ========================================== -->
 
-            <!-- PAUSE -->
-
-            <div
-                class="pause-overlay"
-                id="pauseOverlay"
-            >
-
-                <div class="pause-card">
-
-                    <h2>Paused</h2>
-
-                    <p>
-                        Your game is safely paused.
-                    </p>
-
-                    <div class="overlay-buttons">
-
-                        <button
-                            class="primary"
-                            onclick="resumeGame()"
-                        >
-                            ▶ RESUME
-                        </button>
-
-                        <button
-                            class="secondary"
-                            onclick="restartGame()"
-                        >
-                            ↻ RESTART
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- RESULTS -->
-
-            <div
-                class="result-overlay"
-                id="resultOverlay"
-            >
-
-                <div class="result-card">
-
-                    <div style="font-size:35px">
-                        🏆
-                    </div>
-
-                    <h2>Run Complete</h2>
-
-                    <p id="resultText">
-                        Great run.
-                    </p>
-
-                    <div class="overlay-buttons">
-
-                        <button
-                            class="primary"
-                            onclick="restartGame()"
-                        >
-                            ↻ PLAY AGAIN
-                        </button>
-
-                        <button
-                            class="secondary"
-                            onclick="backToGameVerse()"
-                        >
-                            GAMEVERSE
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- MOBILE CONTROLS -->
-
-            <div class="mobile-controls">
-
-                <button
-                    class="control left-control"
-                    data-control="left"
+                <div
+                    class="controls"
+                    id="controls"
                 >
-                    ◀
-                </button>
-
-                <button
-                    class="control right-control"
-                    data-control="right"
-                >
-                    ▶
-                </button>
-
-                <button
-                    class="control action-control two"
-                    data-control="action2"
-                >
-                    ✦
-                </button>
-
-                <button
-                    class="control action-control"
-                    data-control="action"
-                >
-                    ●
-                </button>
-
-            </div>
-
-
-            <!-- SETTINGS -->
-
-            <div
-                class="settings-panel"
-                id="settingsPanel"
-            >
-
-                <h3>Game Settings</h3>
-
-                <div class="setting-row">
-
-                    <span>Sound</span>
 
                     <button
-                        class="toggle on"
-                        id="soundToggle"
-                        onclick="toggleSetting('soundToggle')"
+                        class="control-button"
+                        data-control="left"
                     >
-                        <span></span>
+                        ◀
+                    </button>
+
+                    <button
+                        class="control-button"
+                        data-control="up"
+                    >
+                        ▲
+                    </button>
+
+                    <button
+                        class="control-button"
+                        data-control="down"
+                    >
+                        ▼
+                    </button>
+
+                    <button
+                        class="control-button"
+                        data-control="right"
+                    >
+                        ▶
+                    </button>
+
+                    <button
+                        class="control-button"
+                        data-control="action"
+                    >
+                        ●
                     </button>
 
                 </div>
 
-                <div class="setting-row">
+            </section>
 
-                    <span>Music</span>
+        </main>
 
-                    <button
-                        class="toggle on"
-                        id="musicToggle"
-                        onclick="toggleSetting('musicToggle')"
-                    >
-                        <span></span>
-                    </button>
-
-                </div>
-
-                <div class="setting-row">
-
-                    <span>Vibration</span>
-
-                    <button
-                        class="toggle on"
-                        id="vibrationToggle"
-                        onclick="toggleSetting('vibrationToggle')"
-                    >
-                        <span></span>
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
+    </div>
 
 
-    <!-- =================================================
-         BOTTOM BAR
-    ================================================= -->
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
 
-    <footer class="game-bottom">
-
-        <button
-            class="bottom-btn"
-            onclick="pauseGame()"
-        >
-            ⏸ PAUSE
-        </button>
-
-        <button
-            class="bottom-btn"
-            onclick="restartGame()"
-        >
-            ↻ RESTART
-        </button>
-
-        <button
-            class="bottom-btn"
-            onclick="toggleFullscreen()"
-        >
-            ⛶ FULLSCREEN
-        </button>
-
-        <button
-            class="bottom-btn"
-            onclick="backToGameVerse()"
-        >
-            🎮 GAMEVERSE
-        </button>
-
-    </footer>
-
-</div>
+    <div
+        id="toast"
+        style="
+            position:fixed;
+            left:50%;
+            bottom:30px;
+            transform:translateX(-50%) translateY(20px);
+            padding:12px 18px;
+            border-radius:999px;
+            background:rgba(20,23,40,.94);
+            border:1px solid rgba(255,255,255,.12);
+            box-shadow:0 15px 40px rgba(0,0,0,.35);
+            color:white;
+            font-size:13px;
+            font-weight:800;
+            opacity:0;
+            pointer-events:none;
+            transition:.25s ease;
+            z-index:100;
+        "
+    ></div>
 
 
-<div
-    class="toast"
-    id="toast"
-></div>
+    <!-- =====================================================
+         GAME ENGINE
+    ====================================================== -->
+
+    <script src="game-engine.js"></script>
 
 
-<script>
+    <!-- =====================================================
+         GAME PAGE CONTROLLER
+    ====================================================== -->
 
-/* =========================================================
-   ULTIMATE WORLD — UNIVERSAL GAME ENGINE
-   ========================================================= */
+    <script>
 
-
-/* ---------------------------------------------------------
-   GAME CONFIGURATION
---------------------------------------------------------- */
-
-const games = {
-
-    "Neon Rush":{
-        icon:"🏎️",
-        category:"RACING",
-        description:
-            "A fast arcade experience built around speed, timing and survival."
-    },
-
-    "Goal Master":{
-        icon:"⚽",
-        category:"SPORTS",
-        description:
-            "Precision football challenges. More football modes will connect here."
-    },
-
-    "Mind Grid":{
-        icon:"🧠",
-        category:"PUZZLE",
-        description:
-            "Solve increasingly difficult logic challenges."
-    },
-
-    "Skybound":{
-        icon:"🚀",
-        category:"ADVENTURE",
-        description:
-            "Explore a mysterious world above the clouds."
-    },
-
-    "Pixel Arena":{
-        icon:"⚡",
-        category:"ARCADE",
-        description:
-            "Survive increasingly difficult waves."
-    },
-
-    "Orbit":{
-        icon:"🪐",
-        category:"STRATEGY",
-        description:
-            "Build and manage orbital systems."
-    },
-
-    "Tactical":{
-        icon:"♟️",
-        category:"STRATEGY",
-        description:
-            "Plan carefully. Every move matters."
-    },
-
-    "Creative Lab":{
-        icon:"🎨",
-        category:"CREATIVE",
-        description:
-            "Create, experiment and build."
-    }
-
-};
+        "use strict";
 
 
-/* ---------------------------------------------------------
-   GAME STATE
---------------------------------------------------------- */
+        /* =================================================
+           ELEMENTS
+        ================================================== */
 
-let gameState = {
+        const canvas =
+            document.getElementById(
+                "gameCanvas"
+            );
 
-    running:false,
+        const ctx =
+            canvas.getContext(
+                "2d"
+            );
 
-    paused:false,
+        const frame =
+            document.getElementById(
+                "gameFrame"
+            );
 
-    score:0,
+        const scoreElement =
+            document.getElementById(
+                "score"
+            );
 
-    level:1,
+        const xpElement =
+            document.getElementById(
+                "xp"
+            );
 
-    elapsed:0,
+        const coinsElement =
+            document.getElementById(
+                "coins"
+            );
 
-    lastTime:0,
+        const levelElement =
+            document.getElementById(
+                "level"
+            );
 
-    animationFrame:null,
+        const livesElement =
+            document.getElementById(
+                "lives"
+            );
 
-    keys:{},
+        const comboElement =
+            document.getElementById(
+                "combo"
+            );
 
-    player:{
-        x:.5,
-        y:.72,
-        width:.08,
-        height:.12,
-        speed:.75
-    },
-
-    obstacles:[],
-
-    particles:[]
-
-};
-
-
-/* ---------------------------------------------------------
-   CANVAS
---------------------------------------------------------- */
-
-const canvas =
-    document.getElementById("gameCanvas");
-
-const ctx =
-    canvas.getContext("2d");
-
-let width = 0;
-let height = 0;
+        const timerElement =
+            document.getElementById(
+                "timer"
+            );
 
 
-/* ---------------------------------------------------------
-   RESIZE
---------------------------------------------------------- */
+        /* =================================================
+           RESIZE
+        ================================================== */
 
-function resizeCanvas(){
+        let width = 0;
+        let height = 0;
 
-    const rect =
-        canvas.getBoundingClientRect();
 
-    const ratio =
-        Math.max(
-            1,
-            window.devicePixelRatio || 1
+        function resizeCanvas(){
+
+            const rect =
+                frame.getBoundingClientRect();
+
+            const ratio =
+                Math.min(
+                    window.devicePixelRatio || 1,
+                    2
+                );
+
+            width =
+                rect.width;
+
+            height =
+                rect.height;
+
+            canvas.width =
+                width * ratio;
+
+            canvas.height =
+                height * ratio;
+
+            canvas.style.width =
+                width + "px";
+
+            canvas.style.height =
+                height + "px";
+
+            ctx.setTransform(
+                ratio,
+                0,
+                0,
+                ratio,
+                0,
+                0
+            );
+
+        }
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
         );
 
-    canvas.width =
-        Math.floor(rect.width * ratio);
 
-    canvas.height =
-        Math.floor(rect.height * ratio);
-
-    ctx.setTransform(
-        ratio,
-        0,
-        0,
-        ratio,
-        0,
-        0
-    );
-
-    width = rect.width;
-    height = rect.height;
-
-}
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-resizeCanvas();
+        resizeCanvas();
 
 
-/* ---------------------------------------------------------
-   LOAD GAME FROM URL
---------------------------------------------------------- */
+        /* =================================================
+           GAME DATA
+        ================================================== */
 
-function loadGame(){
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const requested =
-        params.get("game");
-
-    const game =
-        games[requested] ||
-        games["Neon Rush"];
-
-    document.title =
-        "Ultimate World — " +
-        (requested || "Neon Rush");
-
-    document.getElementById(
-        "gameName"
-    ).textContent =
-        requested || "Neon Rush";
-
-    document.getElementById(
-        "startTitle"
-    ).textContent =
-        requested || "Neon Rush";
-
-    document.getElementById(
-        "gameLogo"
-    ).textContent =
-        game.icon;
-
-    document.getElementById(
-        "startDescription"
-    ).textContent =
-        game.description;
-
-}
-
-loadGame();
+        const requestedGame =
+            params.get("game");
 
 
-/* ---------------------------------------------------------
-   START
---------------------------------------------------------- */
-
-function startGame(){
-
-    document.getElementById(
-        "startScreen"
-    ).style.display = "none";
-
-    document.getElementById(
-        "resultOverlay"
-    ).style.display = "none";
-
-    gameState.running = true;
-    gameState.paused = false;
-    gameState.score = 0;
-    gameState.level = 1;
-    gameState.elapsed = 0;
-    gameState.obstacles = [];
-    gameState.particles = [];
-    gameState.player.x = .5;
-
-    updateHUD();
-
-    gameState.lastTime =
-        performance.now();
-
-    cancelAnimationFrame(
-        gameState.animationFrame
-    );
-
-    gameLoop(
-        gameState.lastTime
-    );
-
-    toast("Game started!");
-
-}
+        let gameId =
+            requestedGame ||
+            "neon-rush";
 
 
-/* ---------------------------------------------------------
-   GAME LOOP
---------------------------------------------------------- */
+        let gameInstance = null;
 
-function gameLoop(timestamp){
 
-    if(!gameState.running){
-        return;
-    }
+        /* =================================================
+           CREATE GAME
+        ================================================== */
 
-    if(gameState.paused){
+        function setupGame(){
 
-        gameState.animationFrame =
+            const registered =
+                UltimateWorld.getRegisteredGame(
+                    gameId
+                );
+
+            /*
+             * If a future game is registered,
+             * this page automatically becomes
+             * its game screen.
+             */
+
+            if(registered){
+
+                gameInstance =
+                    UltimateWorld.launchGame(
+                        gameId
+                    );
+
+            }else{
+
+                /*
+                 * Current fallback.
+                 */
+
+                gameInstance =
+                    UltimateWorld.launchGame(
+                        "neon-rush"
+                    );
+
+                gameId =
+                    "neon-rush";
+
+            }
+
+
+            const config =
+                registered
+                    ? registered.config
+                    : {
+                        name:"Neon Rush",
+                        category:"Racing"
+                    };
+
+
+            document.getElementById(
+                "gameTitle"
+            ).textContent =
+                config.name ||
+                "Ultimate World Game";
+
+
+            document.getElementById(
+                "gameCategory"
+            ).textContent =
+                config.category ||
+                "GAME ARENA";
+
+
+            if(
+                gameInstance &&
+                typeof gameInstance.start ===
+                "function"
+            ){
+
+                gameInstance.start();
+
+            }
+
+        }
+
+
+        /* =================================================
+           UPDATE HUD
+        ================================================== */
+
+        function updateHUD(){
+
+            if(
+                !gameInstance ||
+                !gameInstance.session
+            ){
+
+                return;
+
+            }
+
+            const session =
+                gameInstance.session;
+
+            const profile =
+                UltimateWorld.getProfile();
+
+
+            scoreElement.textContent =
+                Math.floor(
+                    session.score
+                ).toLocaleString();
+
+
+            xpElement.textContent =
+                profile.xp.toLocaleString();
+
+
+            coinsElement.textContent =
+                profile.coins.toLocaleString();
+
+
+            levelElement.textContent =
+                profile.level;
+
+
+            livesElement.textContent =
+                session.lives;
+
+
+            comboElement.textContent =
+                "x" +
+                Math.max(
+                    1,
+                    session.getComboMultiplier()
+                ).toFixed(
+                    session.getComboMultiplier() % 1
+                        ? 2
+                        : 0
+                );
+
+
+            timerElement.textContent =
+                formatTime(
+                    session.time
+                );
+
+        }
+
+
+        /* =================================================
+           TIME
+        ================================================== */
+
+        function formatTime(seconds){
+
+            seconds =
+                Math.max(
+                    0,
+                    Math.floor(
+                        seconds
+                    )
+                );
+
+            const minutes =
+                Math.floor(
+                    seconds / 60
+                );
+
+            const secs =
+                seconds % 60;
+
+            return (
+                String(minutes)
+                    .padStart(2,"0")
+                +
+                ":" +
+                String(secs)
+                    .padStart(2,"0")
+            );
+
+        }
+
+
+        /* =================================================
+           BACKGROUND
+        ================================================== */
+
+        function drawBackground(){
+
+            const gradient =
+                ctx.createLinearGradient(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+            gradient.addColorStop(
+                0,
+                "#090d20"
+            );
+
+            gradient.addColorStop(
+                .5,
+                "#11152c"
+            );
+
+            gradient.addColorStop(
+                1,
+                "#080a16"
+            );
+
+            ctx.fillStyle =
+                gradient;
+
+            ctx.fillRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            /*
+             * Grid
+             */
+
+            ctx.globalAlpha =
+                .07;
+
+            ctx.strokeStyle =
+                "#ffffff";
+
+            ctx.lineWidth =
+                1;
+
+            const grid =
+                45;
+
+            for(
+                let x = 0;
+                x < width;
+                x += grid
+            ){
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    x,
+                    0
+                );
+
+                ctx.lineTo(
+                    x,
+                    height
+                );
+
+                ctx.stroke();
+
+            }
+
+
+            for(
+                let y = 0;
+                y < height;
+                y += grid
+            ){
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    0,
+                    y
+                );
+
+                ctx.lineTo(
+                    width,
+                    y
+                );
+
+                ctx.stroke();
+
+            }
+
+            ctx.globalAlpha =
+                1;
+
+        }
+
+
+        /* =================================================
+           DEMO GAME RENDER
+        ================================================== */
+
+        function renderDemo(){
+
+            if(
+                !gameInstance ||
+                !gameInstance.player
+            ){
+
+                return;
+
+            }
+
+
+            const player =
+                gameInstance.player;
+
+
+            /*
+             * Track
+             */
+
+            const trackWidth =
+                Math.min(
+                    width * .75,
+                    620
+                );
+
+            const trackX =
+                (width - trackWidth) / 2;
+
+
+            const trackGradient =
+                ctx.createLinearGradient(
+                    trackX,
+                    0,
+                    trackX + trackWidth,
+                    0
+                );
+
+            trackGradient.addColorStop(
+                0,
+                "#11162d"
+            );
+
+            trackGradient.addColorStop(
+                .5,
+                "#202647"
+            );
+
+            trackGradient.addColorStop(
+                1,
+                "#11162d"
+            );
+
+
+            ctx.fillStyle =
+                trackGradient;
+
+            ctx.fillRect(
+                trackX,
+                0,
+                trackWidth,
+                height
+            );
+
+
+            /*
+             * Lane markers
+             */
+
+            ctx.globalAlpha =
+                .25;
+
+            ctx.strokeStyle =
+                "#ffffff";
+
+            ctx.setLineDash(
+                [18,18]
+            );
+
+            ctx.lineWidth =
+                3;
+
+            for(
+                let i = 1;
+                i < 3;
+                i++
+            ){
+
+                const x =
+                    trackX +
+                    trackWidth *
+                    (i / 3);
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    x,
+                    0
+                );
+
+                ctx.lineTo(
+                    x,
+                    height
+                );
+
+                ctx.stroke();
+
+            }
+
+            ctx.setLineDash([]);
+
+            ctx.globalAlpha =
+                1;
+
+
+            /*
+             * Obstacles
+             */
+
+            if(
+                gameInstance.obstacles
+            ){
+
+                gameInstance.obstacles
+                    .forEach(
+                        obstacle => {
+
+                            const x =
+                                trackX +
+                                obstacle.x *
+                                trackWidth;
+
+                            const y =
+                                obstacle.y *
+                                height;
+
+                            const w =
+                                obstacle.width *
+                                trackWidth;
+
+                            const h =
+                                obstacle.height *
+                                height;
+
+
+                            ctx.fillStyle =
+                                "#ff3e75";
+
+                            ctx.shadowBlur =
+                                22;
+
+                            ctx.shadowColor =
+                                "#ff3e75";
+
+                            ctx.fillRect(
+                                x - w / 2,
+                                y,
+                                w,
+                                h
+                            );
+
+                            ctx.shadowBlur =
+                                0;
+
+                        }
+                    );
+
+            }
+
+
+            /*
+             * Player
+             */
+
+            const px =
+                trackX +
+                player.x *
+                trackWidth;
+
+            const py =
+                player.y *
+                height;
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                px,
+                py,
+                18,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#7c5cff";
+
+            ctx.shadowBlur =
+                30;
+
+            ctx.shadowColor =
+                "#7c5cff";
+
+            ctx.fill();
+
+            ctx.shadowBlur =
+                0;
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                px,
+                py,
+                7,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#ffffff";
+
+            ctx.fill();
+
+        }
+
+
+        /* =================================================
+           GAME LOOP
+        ================================================== */
+
+        let lastFrame =
+            performance.now();
+
+
+        function gameLoop(now){
+
+            const delta =
+                Math.min(
+                    .1,
+                    (now - lastFrame) /
+                    1000
+                );
+
+            lastFrame =
+                now;
+
+
+            drawBackground();
+
+
+            if(
+                gameInstance &&
+                typeof gameInstance.update ===
+                "function"
+            ){
+
+                gameInstance.update(
+                    delta
+                );
+
+            }
+
+
+            renderDemo();
+
+
+            updateHUD();
+
+
+            UltimateWorld.updateScreenShake(
+                delta
+            );
+
+            UltimateWorld.applyScreenShake(
+                frame
+            );
+
+
             requestAnimationFrame(
                 gameLoop
             );
 
-        return;
+        }
 
-    }
 
-    const delta =
-        Math.min(
-            .035,
-            (timestamp -
-                gameState.lastTime) /
-                1000
+        /* =================================================
+           PAUSE
+        ================================================== */
+
+        const pauseScreen =
+            document.getElementById(
+                "pauseScreen"
+            );
+
+        const pauseButton =
+            document.getElementById(
+                "pauseButton"
+            );
+
+        const resumeButton =
+            document.getElementById(
+                "resumeButton"
+            );
+
+
+        function pauseGame(){
+
+            if(
+                !gameInstance ||
+                !gameInstance.session
+            ){
+
+                return;
+
+            }
+
+            gameInstance.session.pause();
+
+            pauseScreen.classList.add(
+                "visible"
+            );
+
+        }
+
+
+        function resumeGame(){
+
+            if(
+                !gameInstance ||
+                !gameInstance.session
+            ){
+
+                return;
+
+            }
+
+            gameInstance.session.resume();
+
+            pauseScreen.classList.remove(
+                "visible"
+            );
+
+        }
+
+
+        pauseButton.addEventListener(
+            "click",
+            pauseGame
         );
 
-    gameState.lastTime =
-        timestamp;
 
-    gameState.elapsed +=
-        delta;
+        resumeButton.addEventListener(
+            "click",
+            resumeGame
+        );
 
-    updateGame(delta);
 
-    drawGame();
+        /* =================================================
+           RESULTS
+        ================================================== */
 
-    updateHUD();
+        const resultOverlay =
+            document.getElementById(
+                "resultOverlay"
+            );
 
-    gameState.animationFrame =
+
+        function showResults(){
+
+            if(
+                !gameInstance ||
+                !gameInstance.session
+            ){
+
+                return;
+
+            }
+
+            const session =
+                gameInstance.session;
+
+
+            document.getElementById(
+                "resultIcon"
+            ).textContent =
+                session.won
+                    ? "🏆"
+                    : "💥";
+
+
+            document.getElementById(
+                "resultTitle"
+            ).textContent =
+                session.won
+                    ? "VICTORY!"
+                    : "GAME OVER";
+
+
+            document.getElementById(
+                "resultSubtitle"
+            ).textContent =
+                session.won
+                    ? "That was an excellent run."
+                    : "Ready for another attempt?";
+
+
+            document.getElementById(
+                "resultScore"
+            ).textContent =
+                session.score
+                    .toLocaleString();
+
+
+            document.getElementById(
+                "resultXP"
+            ).textContent =
+                "+" +
+                Math.max(
+                    0,
+                    Math.floor(
+                        session.score / 10
+                    )
+                );
+
+
+            document.getElementById(
+                "resultLevel"
+            ).textContent =
+                UltimateWorld
+                    .getProfile()
+                    .level;
+
+
+            document.getElementById(
+                "resultTime"
+            ).textContent =
+                formatTime(
+                    session.time
+                );
+
+
+            resultOverlay.classList.add(
+                "visible"
+            );
+
+        }
+
+
+        /* =================================================
+           SESSION END EVENT
+        ================================================== */
+
+        if(
+            gameInstance &&
+            gameInstance.session
+        ){
+
+            gameInstance.session.on(
+                "end",
+                showResults
+            );
+
+        }
+
+
+        /* =================================================
+           BUTTON NAVIGATION
+        ================================================== */
+
+        document.getElementById(
+            "backButton"
+        ).addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "gameverse.html";
+
+            }
+        );
+
+
+        document.getElementById(
+            "homeButton"
+        ).addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "home.html";
+
+            }
+        );
+
+
+        document.getElementById(
+            "restartButton"
+        ).addEventListener(
+            "click",
+            () => {
+
+                window.location.reload();
+
+            }
+        );
+
+
+        /* =================================================
+           TOUCH / CONTROL BUTTONS
+        ================================================== */
+
+        document.querySelectorAll(
+            "[data-control]"
+        ).forEach(
+            button => {
+
+                const control =
+                    button.dataset.control;
+
+
+                function press(){
+
+                    if(
+                        !gameInstance ||
+                        !gameInstance.player
+                    ){
+
+                        return;
+
+                    }
+
+
+                    const player =
+                        gameInstance.player;
+
+
+                    const amount =
+                        .08;
+
+
+                    if(
+                        control === "left"
+                    ){
+
+                        player.x -= amount;
+
+                    }
+
+
+                    if(
+                        control === "right"
+                    ){
+
+                        player.x += amount;
+
+                    }
+
+
+                    if(
+                        control === "up"
+                    ){
+
+                        player.y -= amount;
+
+                    }
+
+
+                    if(
+                        control === "down"
+                    ){
+
+                        player.y += amount;
+
+                    }
+
+
+                    if(
+                        control === "action"
+                    ){
+
+                        gameInstance.session
+                            .addScore(
+                                10,
+                                "action"
+                            );
+
+                        gameInstance.session
+                            .addCombo();
+
+                        UltimateWorld.sound
+                            .click();
+
+                        UltimateWorld.particles
+                            .burst(
+                                width / 2,
+                                height / 2,
+                                10,
+                                {
+                                    color:
+                                        UltimateWorld.randomNeon()
+                                }
+                            );
+
+                    }
+
+
+                    player.x =
+                        UltimateWorld.clamp(
+                            player.x,
+                            .08,
+                            .92
+                        );
+
+
+                    player.y =
+                        UltimateWorld.clamp(
+                            player.y,
+                            .08,
+                            .92
+                        );
+
+                }
+
+
+                button.addEventListener(
+                    "pointerdown",
+                    event => {
+
+                        event.preventDefault();
+
+                        press();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           KEYBOARD
+        ================================================== */
+
+        window.addEventListener(
+            "keydown",
+            event => {
+
+                if(
+                    event.key ===
+                    "Escape"
+                ){
+
+                    if(
+                        gameInstance &&
+                        gameInstance.session
+                    ){
+
+                        if(
+                            gameInstance.session
+                                .paused
+                        ){
+
+                            resumeGame();
+
+                        }else{
+
+                            pauseGame();
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           START
+        ================================================== */
+
+        setupGame();
+
         requestAnimationFrame(
             gameLoop
         );
 
-}
 
+        /* =================================================
+           GLOBAL ERROR PROTECTION
+        ================================================== */
 
-/* ---------------------------------------------------------
-   UPDATE
---------------------------------------------------------- */
+        window.addEventListener(
+            "error",
+            event => {
 
-function updateGame(delta){
-
-    const keys =
-        gameState.keys;
-
-    let direction = 0;
-
-    if(keys.ArrowLeft || keys.a){
-        direction -= 1;
-    }
-
-    if(keys.ArrowRight || keys.d){
-        direction += 1;
-    }
-
-    gameState.player.x +=
-        direction *
-        gameState.player.speed *
-        delta;
-
-    gameState.player.x =
-        Math.max(
-            .08,
-            Math.min(
-                .92,
-                gameState.player.x
-            )
-        );
-
-    /*
-       Progressive difficulty.
-    */
-
-    gameState.level =
-        1 +
-        Math.floor(
-            gameState.elapsed / 15
-        );
-
-    /*
-       Score grows while surviving.
-    */
-
-    gameState.score =
-        Math.floor(
-            gameState.elapsed * 10 *
-            gameState.level
-        );
-
-}
-
-
-/* ---------------------------------------------------------
-   DRAW
---------------------------------------------------------- */
-
-function drawGame(){
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-    /*
-       Background.
-    */
-
-    const gradient =
-        ctx.createLinearGradient(
-            0,
-            0,
-            0,
-            height
-        );
-
-    gradient.addColorStop(
-        0,
-        "#11152a"
-    );
-
-    gradient.addColorStop(
-        1,
-        "#05060b"
-    );
-
-    ctx.fillStyle =
-        gradient;
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    /*
-       Decorative grid.
-    */
-
-    ctx.strokeStyle =
-        "rgba(255,255,255,.045)";
-
-    ctx.lineWidth = 1;
-
-    const grid =
-        55;
-
-    for(
-        let x = 0;
-        x < width;
-        x += grid
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(x,0);
-        ctx.lineTo(x,height);
-
-        ctx.stroke();
-
-    }
-
-    for(
-        let y = 0;
-        y < height;
-        y += grid
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(0,y);
-        ctx.lineTo(width,y);
-
-        ctx.stroke();
-
-    }
-
-
-    /*
-       Road / arena.
-    */
-
-    const roadWidth =
-        width * .68;
-
-    const roadX =
-        (width - roadWidth) / 2;
-
-    ctx.fillStyle =
-        "rgba(255,255,255,.035)";
-
-    ctx.fillRect(
-        roadX,
-        0,
-        roadWidth,
-        height
-    );
-
-
-    /*
-       Road lines.
-    */
-
-    ctx.strokeStyle =
-        "rgba(0,217,255,.17)";
-
-    ctx.setLineDash([
-        20,
-        20
-    ]);
-
-    ctx.lineWidth = 3;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        width / 2,
-        0
-    );
-
-    ctx.lineTo(
-        width / 2,
-        height
-    );
-
-    ctx.stroke();
-
-    ctx.setLineDash([]);
-
-
-    /*
-       Player.
-    */
-
-    const px =
-        gameState.player.x *
-        width;
-
-    const py =
-        gameState.player.y *
-        height;
-
-    const pw =
-        gameState.player.width *
-        width;
-
-    const ph =
-        gameState.player.height *
-        height;
-
-    ctx.save();
-
-    ctx.shadowBlur = 30;
-    ctx.shadowColor =
-        "rgba(118,87,255,.7)";
-
-    const carGradient =
-        ctx.createLinearGradient(
-            px-pw,
-            py,
-            px+pw,
-            py
-        );
-
-    carGradient.addColorStop(
-        0,
-        "#7657ff"
-    );
-
-    carGradient.addColorStop(
-        1,
-        "#00d9ff"
-    );
-
-    ctx.fillStyle =
-        carGradient;
-
-    roundRect(
-        ctx,
-        px-pw/2,
-        py-ph/2,
-        pw,
-        ph,
-        10
-    );
-
-    ctx.fill();
-
-    ctx.restore();
-
-
-    /*
-       Player lights.
-    */
-
-    ctx.fillStyle =
-        "#fff";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        px-pw*.22,
-        py-ph*.28,
-        3,
-        0,
-        Math.PI*2
-    );
-
-    ctx.arc(
-        px+pw*.22,
-        py-ph*.28,
-        3,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-
-    /*
-       Center information.
-    */
-
-    ctx.textAlign = "center";
-
-    ctx.fillStyle =
-        "rgba(255,255,255,.22)";
-
-    ctx.font =
-        "900 10px Inter, sans-serif";
-
-    ctx.fillText(
-        "ULTIMATE WORLD",
-        width/2,
-        height*.12
-    );
-
-}
-
-
-/* ---------------------------------------------------------
-   ROUND RECT
---------------------------------------------------------- */
-
-function roundRect(
-    context,
-    x,
-    y,
-    w,
-    h,
-    r
-){
-
-    context.beginPath();
-
-    context.moveTo(
-        x+r,
-        y
-    );
-
-    context.arcTo(
-        x+w,
-        y,
-        x+w,
-        y+h,
-        r
-    );
-
-    context.arcTo(
-        x+w,
-        y+h,
-        x,
-        y+h,
-        r
-    );
-
-    context.arcTo(
-        x,
-        y+h,
-        x,
-        y,
-        r
-    );
-
-    context.arcTo(
-        x,
-        y,
-        x+w,
-        y,
-        r
-    );
-
-    context.closePath();
-
-}
-
-
-/* ---------------------------------------------------------
-   HUD
---------------------------------------------------------- */
-
-function updateHUD(){
-
-    document.getElementById(
-        "score"
-    ).textContent =
-        gameState.score;
-
-    const currentBest =
-        Number(
-            localStorage.getItem(
-                "uw_best_" +
-                getCurrentGame()
-            ) || 0
-        );
-
-    document.getElementById(
-        "best"
-    ).textContent =
-        Math.max(
-            currentBest,
-            gameState.score
-        );
-
-    document.getElementById(
-        "level"
-    ).textContent =
-        gameState.level;
-
-    const seconds =
-        Math.floor(
-            gameState.elapsed
-        );
-
-    const minutes =
-        Math.floor(
-            seconds / 60
-        );
-
-    const remainder =
-        seconds % 60;
-
-    document.getElementById(
-        "time"
-    ).textContent =
-        String(minutes).padStart(2,"0") +
-        ":" +
-        String(remainder).padStart(2,"0");
-
-}
-
-
-/* ---------------------------------------------------------
-   CURRENT GAME
---------------------------------------------------------- */
-
-function getCurrentGame(){
-
-    return document.getElementById(
-        "gameName"
-    ).textContent;
-
-}
-
-
-/* ---------------------------------------------------------
-   PAUSE
---------------------------------------------------------- */
-
-function pauseGame(){
-
-    if(!gameState.running){
-        return;
-    }
-
-    gameState.paused = true;
-
-    document.getElementById(
-        "pauseOverlay"
-    ).style.display = "flex";
-
-}
-
-
-/* ---------------------------------------------------------
-   RESUME
---------------------------------------------------------- */
-
-function resumeGame(){
-
-    gameState.paused = false;
-
-    gameState.lastTime =
-        performance.now();
-
-    document.getElementById(
-        "pauseOverlay"
-    ).style.display = "none";
-
-}
-
-
-/* ---------------------------------------------------------
-   RESTART
---------------------------------------------------------- */
-
-function restartGame(){
-
-    document.getElementById(
-        "pauseOverlay"
-    ).style.display = "none";
-
-    document.getElementById(
-        "resultOverlay"
-    ).style.display = "none";
-
-    gameState.running = false;
-
-    cancelAnimationFrame(
-        gameState.animationFrame
-    );
-
-    document.getElementById(
-        "startScreen"
-    ).style.display = "flex";
-
-}
-
-
-/* ---------------------------------------------------------
-   END GAME
---------------------------------------------------------- */
-
-function endGame(){
-
-    gameState.running = false;
-
-    cancelAnimationFrame(
-        gameState.animationFrame
-    );
-
-    const game =
-        getCurrentGame();
-
-    const key =
-        "uw_best_" + game;
-
-    const oldBest =
-        Number(
-            localStorage.getItem(
-                key
-            ) || 0
-        );
-
-    if(gameState.score > oldBest){
-
-        localStorage.setItem(
-            key,
-            gameState.score
-        );
-
-    }
-
-    document.getElementById(
-        "resultText"
-    ).textContent =
-        "Score: " +
-        gameState.score +
-        " • Level: " +
-        gameState.level;
-
-    document.getElementById(
-        "resultOverlay"
-    ).style.display =
-        "flex";
-
-}
-
-
-/* ---------------------------------------------------------
-   KEYBOARD
---------------------------------------------------------- */
-
-window.addEventListener(
-    "keydown",
-    event => {
-
-        gameState.keys[
-            event.key
-        ] = true;
-
-        if(
-            event.key === "Escape" ||
-            event.key === "p" ||
-            event.key === "P"
-        ){
-
-            if(
-                gameState.running &&
-                !gameState.paused
-            ){
-
-                pauseGame();
-
-            }else if(
-                gameState.running &&
-                gameState.paused
-            ){
-
-                resumeGame();
-
-            }
-
-        }
-
-        if(event.key === " "){
-
-            event.preventDefault();
-
-        }
-
-    }
-);
-
-
-window.addEventListener(
-    "keyup",
-    event => {
-
-        gameState.keys[
-            event.key
-        ] = false;
-
-    }
-);
-
-
-/* ---------------------------------------------------------
-   MOBILE CONTROLS
---------------------------------------------------------- */
-
-document
-    .querySelectorAll(".control")
-    .forEach(button => {
-
-        const control =
-            button.dataset.control;
-
-        function press(event){
-
-            event.preventDefault();
-
-            if(control === "left"){
-                gameState.keys.ArrowLeft = true;
-            }
-
-            if(control === "right"){
-                gameState.keys.ArrowRight = true;
-            }
-
-            if(
-                control === "action" ||
-                control === "action2"
-            ){
-
-                gameState.keys[" "] = true;
-
-            }
-
-        }
-
-        function release(event){
-
-            event.preventDefault();
-
-            if(control === "left"){
-                gameState.keys.ArrowLeft = false;
-            }
-
-            if(control === "right"){
-                gameState.keys.ArrowRight = false;
-            }
-
-            if(
-                control === "action" ||
-                control === "action2"
-            ){
-
-                gameState.keys[" "] = false;
-
-            }
-
-        }
-
-        button.addEventListener(
-            "pointerdown",
-            press
-        );
-
-        button.addEventListener(
-            "pointerup",
-            release
-        );
-
-        button.addEventListener(
-            "pointercancel",
-            release
-        );
-
-        button.addEventListener(
-            "pointerleave",
-            release
-        );
-
-    });
-
-
-/* ---------------------------------------------------------
-   FULLSCREEN
---------------------------------------------------------- */
-
-function toggleFullscreen(){
-
-    const element =
-        document.getElementById(
-            "gameScreen"
-        );
-
-    if(!document.fullscreenElement){
-
-        if(element.requestFullscreen){
-
-            element.requestFullscreen();
-
-        }
-
-    }else{
-
-        document.exitFullscreen();
-
-    }
-
-}
-
-
-/* ---------------------------------------------------------
-   SETTINGS
---------------------------------------------------------- */
-
-function toggleSettings(){
-
-    document
-        .getElementById(
-            "settingsPanel"
-        )
-        .classList.toggle("open");
-
-}
-
-
-function toggleSetting(id){
-
-    const button =
-        document.getElementById(id);
-
-    button.classList.toggle("on");
-
-}
-
-
-/* ---------------------------------------------------------
-   BACK
---------------------------------------------------------- */
-
-function backToGameVerse(){
-
-    window.location.href =
-        "gameverse.html";
-
-}
-
-
-/* ---------------------------------------------------------
-   TOAST
---------------------------------------------------------- */
-
-let toastTimer;
-
-function toast(message){
-
-    const element =
-        document.getElementById(
-            "toast"
-        );
-
-    element.textContent =
-        message;
-
-    element.classList.add(
-        "show"
-    );
-
-    clearTimeout(
-        toastTimer
-    );
-
-    toastTimer =
-        setTimeout(
-            () => {
-
-                element.classList.remove(
-                    "show"
+                console.error(
+                    "Ultimate World game error:",
+                    event.error
                 );
 
-            },
-            2200
+            }
         );
 
-}
-
-
-/* ---------------------------------------------------------
-   AUTO SAVE SESSION
---------------------------------------------------------- */
-
-window.addEventListener(
-    "beforeunload",
-    () => {
-
-        localStorage.setItem(
-            "uw_last_game",
-            getCurrentGame()
-        );
-
-    }
-);
-
-
-/* ---------------------------------------------------------
-   INITIAL DRAW
---------------------------------------------------------- */
-
-drawGame();
-
-</script>
+    </script>
 
 </body>
 </html>
