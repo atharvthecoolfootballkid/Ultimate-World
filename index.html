@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Ultimate World — games, sports, creation, AI, learning, exploration and more."
+    >
+
+    <meta name="theme-color" content="#05060c">
+
+    <title>Ultimate World — One World. Endless Possibilities.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+     GLOBAL BACKGROUND
+========================================================= -->
+
+<div class="universe-background" aria-hidden="true">
+
+    <div class="ambient-glow glow-one"></div>
+    <div class="ambient-glow glow-two"></div>
+    <div class="ambient-glow glow-three"></div>
+
+    <div class="grid-floor"></div>
+
+    <div class="particle-field">
+        <i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i>
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<div id="app-shell">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                aria-label="Open navigation"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+
+            <a
+                href="#home"
+                class="brand"
+                data-page="home"
+                aria-label="Ultimate World home"
+            >
+
+                <div class="brand-mark">
+                    <div class="brand-core">U</div>
+                    <div class="brand-orbit orbit-a"></div>
+                    <div class="brand-orbit orbit-b"></div>
+                </div>
+
+                <div class="brand-name">
+                    <strong>ULTIMATE</strong>
+                    <span>WORLD</span>
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- MAIN NAV -->
+
+        <nav class="main-navigation" id="mainNavigation">
+
+            <a
+                href="#home"
+                class="nav-link active"
+                data-page="home"
+            >
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+            </a>
+
+            <a
+                href="#games"
+                class="nav-link"
+                data-page="games"
+            >
+                <span class="nav-icon">◆</span>
+                <span>Games</span>
+            </a>
+
+            <a
+                href="#sports"
+                class="nav-link"
+                data-page="sports"
+            >
+                <span class="nav-icon">●</span>
+                <span>Sports</span>
+            </a>
+
+            <a
+                href="#create"
+                class="nav-link"
+                data-page="create"
+            >
+                <span class="nav-icon">✦</span>
+                <span>Create</span>
+            </a>
+
+            <a
+                href="#learn"
+                class="nav-link"
+                data-page="learn"
+            >
+                <span class="nav-icon">◇</span>
+                <span>Learn</span>
+            </a>
+
+            <a
+                href="#explore"
+                class="nav-link"
+                data-page="explore"
+            >
+                <span class="nav-icon">◎</span>
+                <span>Explore</span>
+            </a>
+
+        </nav>
+
+
+        <!-- TOP ACTIONS -->
+
+        <div class="topbar-actions">
+
+            <button
+                class="search-trigger"
+                id="searchTrigger"
+                aria-label="Search Ultimate World"
+            >
+                <span class="search-symbol">⌕</span>
+                <span class="search-label">Search</span>
+                <kbd>⌘ K</kbd>
+            </button>
+
+
+            <button
+                class="notification-button"
+                id="notificationButton"
+                aria-label="Notifications"
+            >
+                <span>♢</span>
+                <b></b>
+            </button>
+
+
+            <button
+                class="profile-trigger"
+                data-page="profile"
+                aria-label="Open profile"
+            >
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-summary">
+                    <strong>Explorer</strong>
+                    <span>LVL 01</span>
+                </div>
+
+                <span class="profile-chevron">⌄</span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main id="main-content">
+
+
+        <!-- =================================================
+             HOME PAGE
+        ================================================== -->
+
+        <section
+            class="page page-home active"
+            id="home"
+            data-page-section="home"
+        >
+
+
+            <!-- HERO -->
+
+            <section class="hero-section">
+
+                <div class="hero-copy">
+
+                    <div class="hero-kicker">
+                        <span class="live-dot"></span>
+                        THE NEXT GENERATION OF EVERYTHING
+                    </div>
+
+
+                    <h1 class="hero-title">
+
+                        <span>ONE WORLD.</span>
+
+                        <strong>
+                            ENDLESS
+                            <em>POSSIBILITIES.</em>
+                        </strong>
+
+                    </h1>
+
+
+                    <p class="hero-description">
+                        Games. Sports. Creation. Intelligence.
+                        Learning. Exploration.
+                        One constantly evolving universe built
+                        to give you more to discover.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <button
+                            class="button button-primary button-large"
+                            data-page="games"
+                        >
+                            <span>Enter the Universe</span>
+                            <i>→</i>
+                        </button>
+
+                        <button
+                            class="button button-ghost button-large"
+                            data-page="create"
+                        >
+                            <span>Start Creating</span>
+                            <i>✦</i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="hero-proof">
+
+                        <div class="proof-item">
+                            <strong>100+</strong>
+                            <span>Games planned</span>
+                        </div>
+
+                        <div class="proof-divider"></div>
+
+                        <div class="proof-item">
+                            <strong>∞</strong>
+                            <span>Possibilities</span>
+                        </div>
+
+                        <div class="proof-divider"></div>
+
+                        <div class="proof-item">
+                            <strong>01</strong>
+                            <span>Universe</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HERO VISUAL -->
+
+                <div class="hero-visual">
+
+                    <div class="hero-ring ring-outer"></div>
+                    <div class="hero-ring ring-middle"></div>
+                    <div class="hero-ring ring-inner"></div>
+
+
+                    <div class="hero-core">
+
+                        <div class="core-light"></div>
+
+                        <span>U</span>
+
+                        <div class="core-label">
+                            ULTIMATE
+                        </div>
+
+                    </div>
+
+
+                    <!-- FLOATING MODULES -->
+
+                    <div class="hero-module module-games">
+
+                        <div class="module-icon">◆</div>
+
+                        <div>
+                            <small>PLAY</small>
+                            <strong>Games</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="hero-module module-sports">
+
+                        <div class="module-icon">●</div>
+
+                        <div>
+                            <small>LIVE</small>
+                            <strong>Sports</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="hero-module module-ai">
+
+                        <div class="module-icon">✦</div>
+
+                        <div>
+                            <small>POWERED BY</small>
+                            <strong>AI</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="hero-module module-create">
+
+                        <div class="module-icon">◇</div>
+
+                        <div>
+                            <small>BUILD</small>
+                            <strong>Create</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 COMMAND CENTER
+            ================================================== -->
+
+            <section class="content-section command-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">YOUR COMMAND CENTER</span>
+
+                        <h2>
+                            Everything.
+                            <span>Right Here.</span>
+                        </h2>
+                    </div>
+
+                    <p>
+                        Jump directly into the worlds
+                        you want to explore.
+                    </p>
+
+                </div>
+
+
+                <div class="command-grid">
+
+
+                    <article
+                        class="command-card command-card-large games-theme"
+                        data-page="games"
+                    >
+
+                        <div class="card-noise"></div>
+
+                        <div class="command-card-top">
+                            <span class="category-number">01</span>
+                            <span class="card-arrow">↗</span>
+                        </div>
+
+                        <div class="command-art art-games">
+                            <div class="art-orb"></div>
+                            <div class="art-shape shape-one"></div>
+                            <div class="art-shape shape-two"></div>
+                        </div>
+
+                        <div class="command-content">
+
+                            <span class="card-category">
+                                GAME UNIVERSE
+                            </span>
+
+                            <h3>Play Without Limits</h3>
+
+                            <p>
+                                Arcade. Sports. Strategy.
+                                Adventure. Racing. Puzzle.
+                                A growing collection of
+                                serious games.
+                            </p>
+
+                            <span class="card-link">
+                                Explore Games →
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="command-card sports-theme"
+                        data-page="sports"
+                    >
+
+                        <div class="command-card-top">
+                            <span class="category-number">02</span>
+                            <span class="card-arrow">↗</span>
+                        </div>
+
+                        <div class="command-art art-sports">
+                            <div class="stadium-lines"></div>
+                            <div class="stadium-light"></div>
+                        </div>
+
+                        <div class="command-content">
+
+                            <span class="card-category">
+                                SPORTS CENTER
+                            </span>
+
+                            <h3>The World of Sport</h3>
+
+                            <p>
+                                Football, cricket, basketball,
+                                tennis, racing and more.
+                            </p>
+
+                            <span class="card-link">
+                                Enter Sports →
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="command-card ai-theme"
+                        data-page="ai"
+                    >
+
+                        <div class="command-card-top">
+                            <span class="category-number">03</span>
+                            <span class="card-arrow">↗</span>
+                        </div>
+
+                        <div class="command-art art-ai">
+                            <div class="ai-orbit"></div>
+                            <div class="ai-core">✦</div>
+                        </div>
+
+                        <div class="command-content">
+
+                            <span class="card-category">
+                                INTELLIGENCE
+                            </span>
+
+                            <h3>AI, Everywhere</h3>
+
+                            <p>
+                                Think, learn, create and
+                                build with intelligent tools.
+                            </p>
+
+                            <span class="card-link">
+                                Enter AI →
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="command-card create-theme"
+                        data-page="create"
+                    >
+
+                        <div class="command-card-top">
+                            <span class="category-number">04</span>
+                            <span class="card-arrow">↗</span>
+                        </div>
+
+                        <div class="command-art art-create">
+                            <div class="creation-cube">
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="command-content">
+
+                            <span class="card-category">
+                                CREATOR STUDIO
+                            </span>
+
+                            <h3>Make Something Real</h3>
+
+                            <p>
+                                Build games, apps, websites,
+                                quizzes and experiences.
+                            </p>
+
+                            <span class="card-link">
+                                Open Creator →
+                            </span>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 FEATURED EXPERIENCE
+            ================================================== -->
+
+            <section class="content-section featured-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">FEATURED EXPERIENCE</span>
+                        <h2>Built To Be <span>Played.</span></h2>
+                    </div>
+
+                    <button
+                        class="section-action"
+                        data-page="games"
+                    >
+                        View Game Center →
+                    </button>
+
+                </div>
+
+
+                <article class="feature-showcase">
+
+                    <div class="feature-background">
+                        <div class="feature-sun"></div>
+                        <div class="feature-mountain mountain-a"></div>
+                        <div class="feature-mountain mountain-b"></div>
+                        <div class="feature-field"></div>
+                    </div>
+
+
+                    <div class="feature-info">
+
+                        <span class="feature-tag">
+                            FLAGSHIP EXPERIENCE
+                        </span>
+
+                        <h3>
+                            FOOTBALL
+                            <strong>UNLEASHED</strong>
+                        </h3>
+
+                        <p>
+                            A serious football experience is
+                            coming to Ultimate World.
+                            Skill. Strategy. Pressure.
+                            Every decision matters.
+                        </p>
+
+
+                        <div class="feature-stats">
+
+                            <div>
+                                <strong>01</strong>
+                                <span>Career</span>
+                            </div>
+
+                            <div>
+                                <strong>∞</strong>
+                                <span>Matches</span>
+                            </div>
+
+                            <div>
+                                <strong>⚡</strong>
+                                <span>Action</span>
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="button button-light"
+                            data-page="games"
+                        >
+                            Discover Experience
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- =================================================
+                 CONTINUE
+            ================================================== -->
+
+            <section class="content-section">
+
+                <div class="section-heading compact">
+
+                    <div>
+                        <span class="eyebrow">YOUR JOURNEY</span>
+                        <h2>Continue <span>Exploring.</span></h2>
+                    </div>
+
+                </div>
+
+
+                <div class="continue-grid">
+
+
+                    <article class="continue-card">
+
+                        <div class="continue-icon">◇</div>
+
+                        <div class="continue-info">
+
+                            <span>WELCOME</span>
+
+                            <h3>Your universe starts here.</h3>
+
+                            <p>
+                                Explore your first destination.
+                            </p>
+
+                        </div>
+
+                        <div class="progress-line">
+                            <span style="width: 8%;"></span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="continue-card">
+
+                        <div class="continue-icon">✦</div>
+
+                        <div class="continue-info">
+
+                            <span>CREATOR</span>
+
+                            <h3>Build your first idea.</h3>
+
+                            <p>
+                                Your imagination is the limit.
+                            </p>
+
+                        </div>
+
+                        <div class="progress-line">
+                            <span style="width: 0%;"></span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="continue-card">
+
+                        <div class="continue-icon">◎</div>
+
+                        <div class="continue-info">
+
+                            <span>EXPLORE</span>
+
+                            <h3>Discover the unknown.</h3>
+
+                            <p>
+                                Earth. Space. Science.
+                            </p>
+
+                        </div>
+
+                        <div class="progress-line">
+                            <span style="width: 0%;"></span>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 DAILY CHALLENGES
+            ================================================== -->
+
+            <section class="content-section challenges-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">DAILY SYSTEM</span>
+                        <h2>Today's <span>Challenges.</span></h2>
+                    </div>
+
+                    <span class="refresh-label">
+                        Refreshes daily
+                    </span>
+
+                </div>
+
+
+                <div class="challenge-grid">
+
+
+                    <article class="challenge-card">
+
+                        <div class="challenge-index">
+                            01
+                        </div>
+
+                        <div class="challenge-icon">
+                            ◆
+                        </div>
+
+                        <div class="challenge-info">
+
+                            <span>GAME</span>
+
+                            <h3>
+                                Claim Your First Victory
+                            </h3>
+
+                            <p>
+                                Complete a game.
+                            </p>
+
+                        </div>
+
+                        <div class="challenge-reward">
+                            <strong>+100</strong>
+                            <span>XP</span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="challenge-card">
+
+                        <div class="challenge-index">
+                            02
+                        </div>
+
+                        <div class="challenge-icon">
+                            ◇
+                        </div>
+
+                        <div class="challenge-info">
+
+                            <span>KNOWLEDGE</span>
+
+                            <h3>
+                                Discover Something New
+                            </h3>
+
+                            <p>
+                                Complete a learning activity.
+                            </p>
+
+                        </div>
+
+                        <div class="challenge-reward">
+                            <strong>+150</strong>
+                            <span>XP</span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="challenge-card">
+
+                        <div class="challenge-index">
+                            03
+                        </div>
+
+                        <div class="challenge-icon">
+                            ✦
+                        </div>
+
+                        <div class="challenge-info">
+
+                            <span>CREATOR</span>
+
+                            <h3>
+                                Build Something
+                            </h3>
+
+                            <p>
+                                Create your first project.
+                            </p>
+
+                        </div>
+
+                        <div class="challenge-reward">
+                            <strong>+200</strong>
+                            <span>XP</span>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 DISCOVERY WALL
+            ================================================== -->
+
+            <section class="content-section discovery-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">DISCOVERY</span>
+                        <h2>There Is Always <span>More.</span></h2>
+                    </div>
+
+                </div>
+
+
+                <div class="discovery-grid">
+
+
+                    <article
+                        class="discovery-card discovery-learn"
+                        data-page="learn"
+                    >
+
+                        <div class="discovery-art">
+                            <div class="knowledge-orbit"></div>
+                            <span>∞</span>
+                        </div>
+
+                        <div class="discovery-content">
+
+                            <span>LEARNING UNIVERSE</span>
+
+                            <h3>
+                                Turn Curiosity Into Knowledge.
+                            </h3>
+
+                            <p>
+                                Mathematics, science, geography,
+                                history, coding, space and more.
+                            </p>
+
+                            <strong>
+                                Enter Learning →
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="discovery-card discovery-world"
+                        data-page="explore"
+                    >
+
+                        <div class="discovery-art">
+                            <div class="world-globe">
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="discovery-content">
+
+                            <span>EXPLORE UNIVERSE</span>
+
+                            <h3>
+                                The World Is Bigger Than You Think.
+                            </h3>
+
+                            <p>
+                                Explore Earth, space, science,
+                                technology and the unknown.
+                            </p>
+
+                            <strong>
+                                Start Exploring →
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ECOSYSTEM
+            ================================================== -->
+
+            <section class="ecosystem-section">
+
+                <div class="ecosystem-copy">
+
+                    <span class="eyebrow">
+                        THE BIGGER PICTURE
+                    </span>
+
+                    <h2>
+                        Not Just An App.
+                        <strong>An Entire Universe.</strong>
+                    </h2>
+
+                    <p>
+                        Ultimate World is designed to grow.
+                        New games, tools, sports, creator systems,
+                        learning experiences and discoveries can
+                        continuously become part of the platform.
+                    </p>
+
+                    <div class="ecosystem-actions">
+
+                        <button
+                            class="button button-primary"
+                            data-page="explore"
+                        >
+                            Explore The Universe →
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ecosystem-visual">
+
+                    <div class="ecosystem-core">
+                        U
+                    </div>
+
+                    <div class="ecosystem-orbit orbit-one"></div>
+                    <div class="ecosystem-orbit orbit-two"></div>
+                    <div class="ecosystem-orbit orbit-three"></div>
+
+                    <div class="ecosystem-node node-games">
+                        ◆
+                    </div>
+
+                    <div class="ecosystem-node node-sports">
+                        ●
+                    </div>
+
+                    <div class="ecosystem-node node-ai">
+                        ✦
+                    </div>
+
+                    <div class="ecosystem-node node-create">
+                        ◇
+                    </div>
+
+                    <div class="ecosystem-node node-learn">
+                        ∞
+                    </div>
+
+                    <div class="ecosystem-node node-world">
+                        ◎
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =================================================
+             GAMES PAGE
+        ================================================== -->
+
+        <section
+            class="page internal-page"
+            id="games"
+            data-page-section="games"
+        >
+
+            <div class="internal-hero games-internal">
+
+                <span class="eyebrow">
+                    GAME UNIVERSE
+                </span>
+
+                <h1>
+                    PLAY.
+                    <strong>DISCOVER.</strong>
+                    <em>MASTER.</em>
+                </h1>
+
+                <p>
+                    A growing collection of high-quality
+                    interactive experiences.
+                </p>
+
+            </div>
+
+
+            <div class="category-strip">
+
+                <button class="category-pill active">
+                    Featured
+                </button>
+
+                <button class="category-pill">
+                    Sports
+                </button>
+
+                <button class="category-pill">
+                    Racing
+                </button>
+
+                <button class="category-pill">
+                    Strategy
+                </button>
+
+                <button class="category-pill">
+                    Adventure
+                </button>
+
+                <button class="category-pill">
+                    Puzzle
+                </button>
+
+                <button class="category-pill">
+                    Arcade
+                </button>
+
+                <button class="category-pill">
+                    Brain
+                </button>
+
+            </div>
+
+
+            <div class="game-library">
+
+                <article class="game-card flagship-game">
+
+                    <div class="game-art football-art">
+                        <span class="game-art-badge">
+                            FLAGSHIP
+                        </span>
+
+                        <div class="game-art-title">
+                            FOOTBALL
+                            <strong>UNLEASHED</strong>
+                        </div>
+                    </div>
+
+                    <div class="game-card-info">
+
+                        <span>SPORTS • ACTION</span>
+
+                        <h3>
+                            Football Unleashed
+                        </h3>
+
+                        <p>
+                            Precision, pressure and
+                            intelligent play.
+                        </p>
+
+                        <button class="button button-small">
+                            Coming Soon →
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article class="game-card">
+
+                    <div class="game-art neon-art">
+                        <span>RACING</span>
+                        <strong>VELOCITY</strong>
+                    </div>
+
+                    <div class="game-card-info">
+
+                        <span>RACING</span>
+
+                        <h3>
+                            Velocity
+                        </h3>
+
+                        <p>
+                            Speed meets strategy.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="game-card">
+
+                    <div class="game-art strategy-art">
+                        <span>STRATEGY</span>
+                        <strong>DOMINION</strong>
+                    </div>
+
+                    <div class="game-card-info">
+
+                        <span>STRATEGY</span>
+
+                        <h3>
+                            Dominion
+                        </h3>
+
+                        <p>
+                            Think ahead. Control everything.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SPORTS PAGE
+        ================================================== -->
+
+        <section
+            class="page internal-page"
+            id="sports"
+            data-page-section="sports"
+        >
+
+            <div class="internal-hero sports-internal">
+
+                <span class="eyebrow">
+                    SPORTS CENTER
+                </span>
+
+                <h1>
+                    THE WORLD
+                    <strong>OF SPORT.</strong>
+                </h1>
+
+                <p>
+                    One place for the sports you love.
+                </p>
+
+            </div>
+
+
+            <div class="sports-grid">
+
+                <article class="sport-tile football-tile">
+                    <span>⚽</span>
+                    <strong>Football</strong>
+                    <small>Matches • Teams • Stats</small>
+                </article>
+
+                <article class="sport-tile cricket-tile">
+                    <span>🏏</span>
+                    <strong>Cricket</strong>
+                    <small>Matches • Scores • Stats</small>
+                </article>
+
+                <article class="sport-tile basketball-tile">
+                    <span>🏀</span>
+                    <strong>Basketball</strong>
+                    <small>Games • Teams • Stats</small>
+                </article>
+
+                <article class="sport-tile tennis-tile">
+                    <span>🎾</span>
+                    <strong>Tennis</strong>
+                    <small>Matches • Rankings</small>
+                </article>
+
+                <article class="sport-tile racing-tile">
+                    <span>🏎️</span>
+                    <strong>Racing</strong>
+                    <small>Races • Drivers • Teams</small>
+                </article>
+
+                <article class="sport-tile more-sports-tile">
+                    <span>＋</span>
+                    <strong>More Sports</strong>
+                    <small>And the list keeps growing.</small>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AI PAGE
+        ================================================== -->
+
+        <section
+            class="page internal-page"
+            id="ai"
+            data-page-section="ai"
+        >
+
+            <div class="internal-hero ai-internal">
+
+                <span class="eyebrow">
+                    INTELLIGENCE CENTER
+                </span>
+
+                <h1>
+                    THINK
+                    <strong>BEYOND.</strong>
+                </h1>
+
+                <p>
+                    Intelligent tools woven throughout
+                    the Ultimate World ecosystem.
+                </p>
+
+            </div>
+
+
+            <div class="ai-tool-grid">
+
+                <article class="ai-tool-card">
+
+                    <div class="tool-symbol">✦</div>
+
+                    <span>ASSISTANT</span>
+
+                    <h3>
+                        AI Assistant
+                    </h3>
+
+                    <p>
+                        Ask, explore, reason and discover.
+                    </p>
+
+                    <button>
+                        Open →
+                    </button>
+
+                </article>
+
+
+                <article class="ai-tool-card">
+
+                    <div class="tool-symbol">◇</div>
+
+                    <span>LEARNING</span>
+
+                    <h3>
+                        AI Tutor
+                    </h3>
+
+                    <p>
+                        Understand difficult concepts
+                        step by step.
+                    </p>
+
+                    <button>
+                        Open →
+                    </button>
+
+                </article>
+
+
+                <article class="ai-tool-card">
+
+                    <div class="tool-symbol">◆</div>
+
+                    <span>CREATION</span>
+
+                    <h3>
+                        Creator AI
+                    </h3>
+
+                    <p>
+                        Turn ideas into interactive projects.
+                    </p>
+
+                    <button>
+                        Open →
+                    </button>
+
+                </article>
+
+
+                <article class="ai-tool-card">
+
+                    <div class="tool-symbol">⌘</div>
+
+                    <span>CODING</span>
+
+                    <h3>
+                        Code AI
+                    </h3>
+
+                    <p>
+                        Build, understand and improve code.
+                    </p>
+
+                    <button>
+                        Open →
+                    </button>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CREATE PAGE
+        ================================================== -->
+
+        <section
+            class="page internal-page"
+            id="create"
+            data-page-section="create"
+        >
+
+            <div class="internal-hero create-internal">
+
+                <span class="eyebrow">
+                    CREATOR STUDIO
+                </span>
+
+                <h1>
+                    YOUR IDEA.
+                    <strong>YOUR WORLD.</strong>
+                </h1>
+
+                <p>
+                    Build games, apps, websites, quizzes,
+                    simulations and experiences.
+                </p>
+
+            </div>
+
+
+            <div class="creator-options">
+
+                <article class="creator-option">
+
+                    <div class="creator-number">
+                        01
+                    </div>
+
+                    <div class="creator-icon">
+                        ◆
+                    </div>
+
+                    <h3>
+                        Game Studio
+                    </h3>
+
+                    <p>
+                        Create your own interactive games.
+                    </p>
+
+                    <button>
+                        Open Studio →
+                    </button>
+
+                </article>
+
+
+                <article class="creator-option">
+
+                    <div class="creator-number">
+                        02
+                    </div>
+
+                    <div class="creator-icon">
+                        ◇
+                    </div>
+
+                    <h3>
+                        App Builder
+                    </h3>
+
+                    <p>
+                        Build useful applications.
+                    </p>
+
+                    <button>
+                        Open Builder →
+                    </button>
+
+                </article>
+
+
+                <article class="creator-option">
+
+                    <div class="creator-number">
+                        03
+                    </div>
+
+                    <div class="creator-icon">
+                        ◎
+                    </div>
+
+                    <h3>
+                        Quiz Studio
+                    </h3>
+
+                    <p>
+                        Make interactive challenges.
+                    </p>
+
+                    <button>
+                        Open Studio →
+                    </button>
+
+                </article>
+
+
+                <article class="creator-option">
+
+                    <div class="creator-number">
+                        04
+                    </div>
+
+                    <div class="creator-icon">
+                        ∞
+                    </div>
+
+                    <h3>
+                        More Tools
+                    </h3>
+
+                    <p>
+                        More creation systems are coming.
+                    </p>
+
+                    <button>
+                        Explore →
+                    </button>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LEARNING PAGE
+        ================================================== -->
+
+        <section
+            class="page internal-page"
+            id="learn"
+            data-page-section="learn"
+        >
+
+            <div class="internal-hero learning-internal">
+
+                <span class="eyebrow">
+                    LEARNING UNIVERSE
+                </span>
+
+                <h1>
+                    KNOWLEDGE
+                    <strong>IS POWER.</strong>
+                </h1>
+
+                <p>
+                    Learn through interactive experiences,
+                    challenges and discovery.
+                </p>
+
+            </div>
+
+
+            <div class="learning-grid">
+
+                <article class="learning-tile">
+                    <span>01</span>
+                    <strong>Mathematics</strong>
+                    <small>Numbers • Logic • Problem solving</small>
+                </article>
+
+                <article class="learning-tile">
+                    <span>02</span>
+                    <strong>Science</strong>
+                    <small>Physics • Chemistry • Biology</small>
+                </article>
+
+                <article class="learning-tile">
+                    <span>03</span>
+                    <strong>Geography</strong>
+                    <small>Earth • Countries • Maps</small>
+                </article>
+
+                <article class="learning-tile">
+                    <span>04</span>
+                    <strong>History</strong>
+                    <small>Civilizations • Events • People</small>
+                </article>
+
+                <article class="learning-tile">
+                    <span>05</span>
+                    <strong>Programming</strong>
+                    <small>Code • Algorithms • Technology</small>
+                </article>
+
+                <article class="learning-tile">
+                    <span>06</span>
+                    <strong>Space</strong>
+                    <small>Stars • Planets • Universe</small>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             EXPLORE PAGE
+        ================================================== -->
+
+        <section
+            class="page internal-page"
+            id="explore"
+            data-page-section="explore"
+        >
+
+            <div class="internal-hero explore-internal">
+
+                <span class="eyebrow">
+                    EXPLORATION UNIVERSE
+                </span>
+
+                <h1>
+                    DISCOVER
+                    <strong>EVERYTHING.</strong>
+                </h1>
+
+                <p>
+                    Earth, space, science, technology,
+                    animals, inventions and beyond.
+                </p>
+
+            </div>
+
+
+            <div class="explore-panels">
+
+                <article class="explore-panel earth-panel">
+
+                    <div class="panel-symbol">
+                        ◎
+                    </div>
+
+                    <span>EARTH</span>
+
+                    <h3>
+                        Our Planet
+                    </h3>
+
+                    <p>
+                        Countries, cities, landmarks,
+                        oceans, mountains and more.
+                    </p>
+
+                    <button>
+                        Explore Earth →
+                    </button>
+
+                </article>
+
+
+                <article class="explore-panel space-panel">
+
+                    <div class="panel-symbol">
+                        ✦
+                    </div>
+
+                    <span>SPACE</span>
+
+                    <h3>
+                        Beyond Earth
+                    </h3>
+
+                    <p>
+                        Stars, planets, galaxies,
+                        missions and the universe.
+                    </p>
+
+                    <button>
+                        Explore Space →
+                    </button>
+
+                </article>
+
+
+                <article class="explore-panel science-panel">
+
+                    <div class="panel-symbol">
+                        ◇
+                    </div>
+
+                    <span>SCIENCE</span>
+
+                    <h3>
+                        How Everything Works
+                    </h3>
+
+                    <p>
+                        Discover the systems behind
+                        the world around us.
+                    </p>
+
+                    <button>
+                        Explore Science →
+                    </button>
+
+                </article>
+
+
+                <article class="explore-panel tech-panel">
+
+                    <div class="panel-symbol">
+                        ⌘
+                    </div>
+
+                    <span>TECHNOLOGY</span>
+
+                    <h3>
+                        What's Next?
+                    </h3>
+
+                    <p>
+                        Innovation, computers,
+                        engineering and inventions.
+                    </p>
+
+                    <button>
+                        Explore Technology →
+                    </button>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PROFILE PAGE
+        ================================================== -->
+
+        <section
+            class="page internal-page"
+            id="profile"
+            data-page-section="profile"
+        >
+
+            <div class="profile-hero">
+
+                <div class="profile-big-avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <span class="eyebrow">
+                        ULTIMATE EXPLORER
+                    </span>
+
+                    <h1>
+                        Player
+                    </h1>
+
+                    <p>
+                        Level 01 • Beginning the journey
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-stats">
+
+                <article>
+                    <strong>0</strong>
+                    <span>Games Played</span>
+                </article>
+
+                <article>
+                    <strong>0</strong>
+                    <span>Achievements</span>
+                </article>
+
+                <article>
+                    <strong>0</strong>
+                    <span>Projects</span>
+                </article>
+
+                <article>
+                    <strong>0</strong>
+                    <span>XP</span>
+                </article>
+
+            </div>
+
+
+            <div class="level-panel">
+
+                <div>
+
+                    <span>LEVEL 01</span>
+
+                    <h2>
+                        Ultimate Explorer
+                    </h2>
+
+                </div>
+
+                <div class="level-progress">
+
+                    <div class="level-progress-top">
+                        <span>Progress</span>
+                        <strong>0 / 100 XP</strong>
+                    </div>
+
+                    <div class="level-track">
+                        <span></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         SEARCH EXPERIENCE
+    ====================================================== -->
+
+    <div
+        class="search-overlay"
+        id="searchOverlay"
+        aria-hidden="true"
+    >
+
+        <div class="search-backdrop"></div>
+
+        <div class="search-panel">
+
+            <div class="search-panel-header">
+
+                <span>
+                    UNIVERSAL SEARCH
+                </span>
+
+                <button id="closeSearch">
+                    ESC
+                </button>
+
+            </div>
+
+
+            <div class="search-input-wrap">
+
+                <span>⌕</span>
+
+                <input
+                    id="globalSearch"
+                    type="search"
+                    placeholder="Search anything in Ultimate World..."
+                    autocomplete="off"
+                >
+
+                <kbd>ENTER</kbd>
+
+            </div>
+
+
+            <div class="search-suggestions">
+
+                <span>TRY SEARCHING</span>
+
+                <button>Football</button>
+                <button>Games</button>
+                <button>Space</button>
+                <button>Science</button>
+                <button>Create an app</button>
+
+            </div>
+
+
+            <div
+                class="search-results"
+                id="searchResults"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MOBILE BOTTOM NAV
+    ====================================================== -->
+
+    <nav class="mobile-bottom-nav">
+
+        <a href="#home" data-page="home">
+            <span>⌂</span>
+            <small>Home</small>
+        </a>
+
+        <a href="#games" data-page="games">
+            <span>◆</span>
+            <small>Games</small>
+        </a>
+
+        <a href="#sports" data-page="sports">
+            <span>●</span>
+            <small>Sports</small>
+        </a>
+
+        <a href="#create" data-page="create">
+            <span>✦</span>
+            <small>Create</small>
+        </a>
+
+        <a href="#profile" data-page="profile">
+            <span>○</span>
+            <small>You</small>
+        </a>
+
+    </nav>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-main">
+
+            <div class="footer-brand">
+
+                <div class="brand-mark">
+                    <div class="brand-core">U</div>
+                </div>
+
+                <div>
+
+                    <strong>
+                        ULTIMATE WORLD
+                    </strong>
+
+                    <span>
+                        ONE WORLD. ENDLESS POSSIBILITIES.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-columns">
+
+                <div>
+
+                    <span>UNIVERSE</span>
+
+                    <a href="#games">Games</a>
+                    <a href="#sports">Sports</a>
+                    <a href="#create">Create</a>
+
+                </div>
+
+                <div>
+
+                    <span>DISCOVER</span>
+
+                    <a href="#learn">Learn</a>
+                    <a href="#explore">Explore</a>
+                    <a href="#ai">AI</a>
+
+                </div>
+
+                <div>
+
+                    <span>ULTIMATE WORLD</span>
+
+                    <a href="#">About</a>
+                    <a href="#">Updates</a>
+                    <a href="#">Help</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Ultimate World
+            </span>
+
+            <span>
+                Built to keep growing.
+            </span>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="app.js"></script>
+
+</body>
+</html>
