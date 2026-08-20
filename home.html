@@ -12,34 +12,1838 @@
 
     <meta
         name="theme-color"
-        content="#05060b"
+        content="#06070d"
     >
 
-    <meta
-        name="description"
-        content="Ultimate World — games, sports, creation, learning, discovery, technology, science and more."
-    >
+    <title>Ultimate World — Command Center</title>
 
-    <title>Ultimate World 🌎</title>
+    <style>
 
-    <!-- =================================================
-         ULTIMATE WORLD STYLES
-         ================================================= -->
+        /* =========================================================
+           ULTIMATE WORLD — COMMAND CENTER
+           ========================================================= */
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+        :root {
 
-    <link
-        rel="stylesheet"
-        href="ultimate.css"
-    >
+            --bg: #06070d;
+            --panel: rgba(255,255,255,.045);
+            --panel-strong: rgba(255,255,255,.075);
+            --border: rgba(255,255,255,.09);
 
-    <link
-        rel="stylesheet"
-        href="home.css"
-    >
+            --text: #ffffff;
+            --muted: #7e879d;
+
+            --purple: #7c5cff;
+            --blue: #00d9ff;
+            --pink: #ff4ecd;
+            --green: #26e59a;
+            --orange: #ffad42;
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            color: var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 5% 0%,
+                    rgba(124,92,255,.14),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 95% 10%,
+                    rgba(0,217,255,.08),
+                    transparent 28%
+                ),
+
+                var(--bg);
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+        }
+
+
+        button,
+        input {
+
+            font: inherit;
+
+        }
+
+
+        button {
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================================================
+           TOP BAR
+           ========================================================= */
+
+        .uw-topbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 5000;
+
+            min-height: 72px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            padding:
+                10px 24px;
+
+            background:
+                rgba(6,7,13,.82);
+
+            border-bottom:
+                1px solid var(--border);
+
+            backdrop-filter:
+                blur(25px);
+
+            -webkit-backdrop-filter:
+                blur(25px);
+
+        }
+
+
+        .uw-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            min-width: 205px;
+
+        }
+
+
+        .uw-brand-logo {
+
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 14px;
+
+            font-size: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,.45),
+                    rgba(0,217,255,.18)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.13);
+
+            box-shadow:
+                0 0 35px
+                rgba(124,92,255,.15);
+
+        }
+
+
+        .uw-brand-text {
+
+            display: flex;
+
+            flex-direction: column;
+
+            font-weight: 950;
+
+            line-height: 1;
+
+            letter-spacing: .1em;
+
+            font-size: 11px;
+
+        }
+
+
+        .uw-brand-text strong {
+
+            margin-top: 4px;
+
+            font-size: 14px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--purple),
+                    var(--blue)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+
+        }
+
+
+        .uw-search {
+
+            flex: 1;
+
+            max-width: 680px;
+
+            min-width: 120px;
+
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.035);
+
+        }
+
+
+        .uw-search span {
+
+            font-size: 17px;
+
+        }
+
+
+        .uw-search input {
+
+            flex: 1;
+
+            min-width: 0;
+
+            outline: none;
+
+            border: 0;
+
+            color: white;
+
+            background: transparent;
+
+            font-size: 13px;
+
+        }
+
+
+        .uw-search input::placeholder {
+
+            color: #626b80;
+
+        }
+
+
+        .uw-search kbd {
+
+            padding:
+                5px 8px;
+
+            border-radius: 7px;
+
+            color: #677086;
+
+            background:
+                rgba(255,255,255,.05);
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+        }
+
+
+        .uw-top-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+            margin-left: auto;
+
+        }
+
+
+        .uw-icon-button {
+
+            width: 43px;
+            height: 43px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 13px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid var(--border);
+
+            transition: .2s ease;
+
+        }
+
+
+        .uw-icon-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            background:
+                rgba(255,255,255,.08);
+
+        }
+
+
+        /* =========================================================
+           APP LAYOUT
+           ========================================================= */
+
+        .uw-layout {
+
+            display: grid;
+
+            grid-template-columns:
+                245px minmax(0,1fr);
+
+            min-height:
+                calc(100vh - 72px);
+
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+           ========================================================= */
+
+        .uw-sidebar {
+
+            position: sticky;
+
+            top: 72px;
+
+            height:
+                calc(100vh - 72px);
+
+            overflow-y: auto;
+
+            padding:
+                22px 14px;
+
+            border-right:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,.018);
+
+        }
+
+
+        .uw-sidebar-section {
+
+            margin-bottom: 26px;
+
+        }
+
+
+        .uw-sidebar-title {
+
+            padding:
+                0 12px 9px;
+
+            color: #525c70;
+
+            font-size: 8px;
+
+            font-weight: 950;
+
+            letter-spacing: .16em;
+
+        }
+
+
+        .uw-sidebar-button {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                11px 12px;
+
+            margin-bottom: 3px;
+
+            color: #7f899e;
+
+            border: 1px solid transparent;
+
+            border-radius: 11px;
+
+            background: transparent;
+
+            text-align: left;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            transition: .2s ease;
+
+        }
+
+
+        .uw-sidebar-button span:first-child {
+
+            width: 25px;
+
+            text-align: center;
+
+            font-size: 17px;
+
+        }
+
+
+        .uw-sidebar-button:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.045);
+
+        }
+
+
+        .uw-sidebar-button.active {
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(124,92,255,.22),
+                    rgba(124,92,255,.04)
+                );
+
+            border-color:
+                rgba(124,92,255,.22);
+
+            box-shadow:
+                inset 3px 0 0 var(--purple);
+
+        }
+
+
+        .uw-sidebar-bottom {
+
+            margin-top: 30px;
+
+            padding:
+                16px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid var(--border);
+
+        }
+
+
+        .uw-sidebar-bottom small {
+
+            color: #596377;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: .1em;
+
+        }
+
+
+        .uw-sidebar-bottom strong {
+
+            display: block;
+
+            margin-top: 7px;
+
+            font-size: 14px;
+
+        }
+
+
+        .uw-progress {
+
+            height: 5px;
+
+            margin-top: 12px;
+
+            overflow: hidden;
+
+            border-radius: 99px;
+
+            background:
+                rgba(255,255,255,.07);
+
+        }
+
+
+        .uw-progress span {
+
+            display: block;
+
+            width: 62%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--purple),
+                    var(--blue)
+                );
+
+        }
+
+
+        /* =========================================================
+           MAIN
+           ========================================================= */
+
+        .uw-main {
+
+            width: min(1500px, 100%);
+
+            margin: auto;
+
+            padding:
+                32px 34px 70px;
+
+        }
+
+
+        /* =========================================================
+           WELCOME
+           ========================================================= */
+
+        .uw-welcome {
+
+            position: relative;
+
+            min-height: 290px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 34px;
+
+            border-radius: 25px;
+
+            background:
+
+                radial-gradient(
+                    circle at 80% 30%,
+                    rgba(0,217,255,.15),
+                    transparent 28%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,.23),
+                    rgba(255,255,255,.025)
+                );
+
+            border:
+                1px solid var(--border);
+
+        }
+
+
+        .uw-welcome::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 430px;
+            height: 430px;
+
+            right: -90px;
+            top: -130px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(0,217,255,.16);
+
+            box-shadow:
+                0 0 0 45px rgba(0,217,255,.025),
+                0 0 0 90px rgba(0,217,255,.02);
+
+        }
+
+
+        .uw-welcome-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 720px;
+
+        }
+
+
+        .uw-eyebrow {
+
+            color: var(--blue);
+
+            font-size: 9px;
+
+            font-weight: 950;
+
+            letter-spacing: .17em;
+
+        }
+
+
+        .uw-welcome h1 {
+
+            margin:
+                10px 0 12px;
+
+            font-size:
+                clamp(32px, 4.5vw, 60px);
+
+            line-height: .98;
+
+            letter-spacing:
+                -.055em;
+
+        }
+
+
+        .uw-welcome h1 span {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--purple),
+                    var(--blue),
+                    var(--pink)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+
+            background-size: 200% auto;
+
+            animation:
+                uwGradient 5s linear infinite;
+
+        }
+
+
+        @keyframes uwGradient {
+
+            to {
+                background-position:
+                    200% center;
+            }
+
+        }
+
+
+        .uw-welcome p {
+
+            max-width: 620px;
+
+            margin: 0;
+
+            color: #8791a6;
+
+            line-height: 1.65;
+
+            font-size: 13px;
+
+        }
+
+
+        .uw-welcome-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 23px;
+
+        }
+
+
+        .uw-primary {
+
+            min-height: 46px;
+
+            padding:
+                0 17px;
+
+            border: 0;
+
+            border-radius: 12px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    #4c8fff
+                );
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 12px 30px
+                rgba(124,92,255,.22);
+
+        }
+
+
+        .uw-secondary {
+
+            min-height: 46px;
+
+            padding:
+                0 17px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.045);
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+        }
+
+
+        /* =========================================================
+           QUICK ACCESS
+           ========================================================= */
+
+        .uw-section {
+
+            margin-top: 36px;
+
+        }
+
+
+        .uw-section-header {
+
+            display: flex;
+
+            align-items: end;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .uw-section-header small {
+
+            color: #596377;
+
+            font-size: 8px;
+
+            font-weight: 950;
+
+            letter-spacing: .16em;
+
+        }
+
+
+        .uw-section-header h2 {
+
+            margin:
+                5px 0 0;
+
+            font-size: 25px;
+
+            letter-spacing:
+                -.035em;
+
+        }
+
+
+        .uw-section-header p {
+
+            margin: 5px 0 0;
+
+            color: #697389;
+
+            font-size: 11px;
+
+        }
+
+
+        .uw-view-all {
+
+            color: var(--blue);
+
+            border: 0;
+
+            background: transparent;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+        }
+
+
+        .uw-quick-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(6,1fr);
+
+            gap: 10px;
+
+        }
+
+
+        .uw-quick {
+
+            min-height: 125px;
+
+            padding: 18px;
+
+            text-align: left;
+
+            color: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            transition: .22s ease;
+
+        }
+
+
+        .uw-quick:hover {
+
+            transform:
+                translateY(-5px);
+
+            background:
+                rgba(255,255,255,.065);
+
+            border-color:
+                rgba(124,92,255,.3);
+
+        }
+
+
+        .uw-quick-icon {
+
+            font-size: 28px;
+
+        }
+
+
+        .uw-quick strong {
+
+            display: block;
+
+            margin-top: 14px;
+
+            font-size: 12px;
+
+        }
+
+
+        .uw-quick small {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: #697389;
+
+            font-size: 8px;
+
+            line-height: 1.4;
+
+        }
+
+
+        /* =========================================================
+           FEATURED GRID
+           ========================================================= */
+
+        .uw-feature-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr .8fr .8fr;
+
+            gap: 12px;
+
+        }
+
+
+        .uw-feature {
+
+            position: relative;
+
+            min-height: 260px;
+
+            overflow: hidden;
+
+            padding: 25px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: flex-end;
+
+            text-align: left;
+
+            color: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124,92,255,.2),
+                    rgba(255,255,255,.025)
+                );
+
+            transition: .22s ease;
+
+        }
+
+
+        .uw-feature:hover {
+
+            transform:
+                translateY(-5px);
+
+            box-shadow:
+                0 25px 60px
+                rgba(0,0,0,.2);
+
+        }
+
+
+        .uw-feature:first-child {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,.28),
+                    rgba(0,217,255,.08)
+                );
+
+        }
+
+
+        .uw-feature-icon {
+
+            position: absolute;
+
+            right: 22px;
+            top: 18px;
+
+            font-size: 65px;
+
+            opacity: .9;
+
+            filter:
+                drop-shadow(
+                    0 15px 25px
+                    rgba(0,0,0,.3)
+                );
+
+        }
+
+
+        .uw-feature small {
+
+            color: var(--blue);
+
+            font-size: 8px;
+
+            font-weight: 950;
+
+            letter-spacing: .13em;
+
+        }
+
+
+        .uw-feature h3 {
+
+            margin:
+                8px 0 5px;
+
+            font-size: 24px;
+
+            letter-spacing:
+                -.035em;
+
+        }
+
+
+        .uw-feature p {
+
+            max-width: 430px;
+
+            margin: 0;
+
+            color: #8590a5;
+
+            font-size: 11px;
+
+            line-height: 1.55;
+
+        }
+
+
+        /* =========================================================
+           SPORTS
+           ========================================================= */
+
+        .uw-sports-layout {
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr .8fr;
+
+            gap: 12px;
+
+        }
+
+
+        .uw-sports-main {
+
+            min-height: 300px;
+
+            padding: 28px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,217,255,.11),
+                    rgba(124,92,255,.09)
+                );
+
+        }
+
+
+        .uw-sports-main h3 {
+
+            margin:
+                8px 0;
+
+            font-size: 31px;
+
+        }
+
+
+        .uw-sports-main p {
+
+            max-width: 600px;
+
+            color: #808a9f;
+
+            line-height: 1.6;
+
+            font-size: 12px;
+
+        }
+
+
+        .uw-sport-icons {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(6,1fr);
+
+            gap: 8px;
+
+            margin-top: 28px;
+
+        }
+
+
+        .uw-sport {
+
+            padding:
+                12px 5px;
+
+            text-align: center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.035);
+
+        }
+
+
+        .uw-sport span {
+
+            display: block;
+
+            font-size: 23px;
+
+        }
+
+
+        .uw-sport small {
+
+            display: block;
+
+            margin-top: 6px;
+
+            color: #687287;
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+        }
+
+
+        .uw-live-panel {
+
+            min-height: 300px;
+
+            padding: 25px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.035);
+
+        }
+
+
+        .uw-live-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+        }
+
+
+        .uw-live-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                var(--green);
+
+            box-shadow:
+                0 0 13px
+                var(--green);
+
+        }
+
+
+        .uw-score {
+
+            margin-top: 15px;
+
+            padding:
+                14px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+
+        }
+
+
+        .uw-score-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #687287;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+        }
+
+
+        .uw-score-teams {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr auto 1fr;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 14px;
+
+        }
+
+
+        .uw-team {
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+        }
+
+
+        .uw-team:last-child {
+
+            text-align: right;
+
+        }
+
+
+        .uw-score-number {
+
+            font-size: 19px;
+
+            font-weight: 950;
+
+        }
+
+
+        /* =========================================================
+           CREATOR
+           ========================================================= */
+
+        .uw-creator {
+
+            position: relative;
+
+            min-height: 290px;
+
+            overflow: hidden;
+
+            padding: 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    rgba(124,92,255,.18),
+                    rgba(255,78,205,.08),
+                    rgba(0,217,255,.07)
+                );
+
+        }
+
+
+        .uw-creator-content {
+
+            max-width: 650px;
+
+        }
+
+
+        .uw-creator-content small {
+
+            color: var(--pink);
+
+            font-size: 8px;
+
+            font-weight: 950;
+
+            letter-spacing: .15em;
+
+        }
+
+
+        .uw-creator-content h2 {
+
+            margin:
+                8px 0;
+
+            font-size:
+                clamp(28px, 4vw, 45px);
+
+            line-height: 1;
+
+            letter-spacing:
+                -.05em;
+
+        }
+
+
+        .uw-creator-content p {
+
+            color: #808a9f;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .uw-creator-art {
+
+            width: 260px;
+            height: 220px;
+
+            position: relative;
+
+        }
+
+
+        .uw-creator-box {
+
+            position: absolute;
+
+            width: 70px;
+            height: 70px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            font-size: 28px;
+
+            backdrop-filter:
+                blur(15px);
+
+            animation:
+                creatorFloat 4s ease-in-out infinite;
+
+        }
+
+
+        .uw-creator-box:nth-child(1) {
+
+            top: 5px;
+            left: 95px;
+
+        }
+
+
+        .uw-creator-box:nth-child(2) {
+
+            top: 85px;
+            left: 10px;
+
+            animation-delay:
+                .5s;
+
+        }
+
+
+        .uw-creator-box:nth-child(3) {
+
+            top: 95px;
+            right: 5px;
+
+            animation-delay:
+                1s;
+
+        }
+
+
+        .uw-creator-box:nth-child(4) {
+
+            bottom: 0;
+            left: 100px;
+
+            animation-delay:
+                1.5s;
+
+        }
+
+
+        @keyframes creatorFloat {
+
+            50% {
+
+                transform:
+                    translateY(-10px)
+                    rotate(3deg);
+
+            }
+
+        }
+
+
+        /* =========================================================
+           ACTIVITY
+           ========================================================= */
+
+        .uw-bottom-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+
+        }
+
+
+        .uw-panel {
+
+            padding: 23px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.035);
+
+        }
+
+
+        .uw-panel h3 {
+
+            margin:
+                0 0 17px;
+
+            font-size: 15px;
+
+        }
+
+
+        .uw-activity {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                11px 0;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.05);
+
+        }
+
+
+        .uw-activity:last-child {
+
+            border-bottom: 0;
+
+        }
+
+
+        .uw-activity-icon {
+
+            width: 37px;
+            height: 37px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,.05);
+
+        }
+
+
+        .uw-activity strong {
+
+            display: block;
+
+            font-size: 10px;
+
+        }
+
+
+        .uw-activity small {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: #687287;
+
+            font-size: 8px;
+
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .uw-footer {
+
+            margin-top: 55px;
+
+            padding-top: 25px;
+
+            border-top:
+                1px solid var(--border);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #50596c;
+
+            font-size: 9px;
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1150px) {
+
+            .uw-layout {
+
+                grid-template-columns:
+                    205px minmax(0,1fr);
+
+            }
+
+
+            .uw-quick-grid {
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+            }
+
+
+            .uw-feature-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+
+            .uw-feature:first-child {
+
+                grid-column:
+                    span 2;
+
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .uw-sidebar {
+
+                display: none;
+
+            }
+
+
+            .uw-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .uw-main {
+
+                padding:
+                    22px 18px 50px;
+
+            }
+
+
+            .uw-sports-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .uw-bottom-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .uw-creator-art {
+
+                opacity: .35;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .uw-topbar {
+
+                padding:
+                    10px 13px;
+
+            }
+
+
+            .uw-brand {
+
+                min-width: auto;
+
+            }
+
+
+            .uw-brand-text {
+
+                display: none;
+
+            }
+
+
+            .uw-search {
+
+                max-width: none;
+
+            }
+
+
+            .uw-search kbd {
+
+                display: none;
+
+            }
+
+
+            .uw-welcome {
+
+                padding: 24px;
+
+            }
+
+
+            .uw-quick-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+
+            .uw-feature-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .uw-feature:first-child {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .uw-sport-icons {
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+            }
+
+
+            .uw-creator {
+
+                padding: 25px;
+
+            }
+
+
+            .uw-creator-art {
+
+                position: absolute;
+
+                right: -80px;
+
+                opacity: .2;
+
+            }
+
+
+            .uw-footer {
+
+                flex-direction: column;
+
+                gap: 8px;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -47,217 +1851,133 @@
 <body>
 
 
-<!-- =====================================================
-     BACKGROUND
-     ===================================================== -->
+<!-- =========================================================
+     TOP BAR
+     ========================================================= -->
 
-<div class="uw-background">
-
-    <div class="uw-background-glow uw-glow-one"></div>
-
-    <div class="uw-background-glow uw-glow-two"></div>
-
-    <div class="uw-background-stars"></div>
-
-</div>
+<header class="uw-topbar">
 
 
+    <div class="uw-brand">
 
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
-<header class="uw-header">
-
-    <a
-        href="home.html"
-        class="uw-logo"
-        aria-label="Ultimate World Home"
-    >
-
-        <span class="uw-logo-symbol">
+        <div class="uw-brand-logo">
             🌎
-        </span>
+        </div>
 
-        <span class="uw-logo-text">
+        <div class="uw-brand-text">
 
             ULTIMATE
 
-            <b>
+            <strong>
                 WORLD
-            </b>
+            </strong>
 
+        </div>
+
+    </div>
+
+
+
+    <div class="uw-search">
+
+        <span>
+            🔎
         </span>
 
-    </a>
-
-
-    <nav
-        class="uw-main-nav"
-        aria-label="Main navigation"
-    >
-
-        <button
-            data-hub-tab="home"
-            class="active"
+        <input
+            id="uwSearch"
+            type="search"
+            placeholder="Search Ultimate World..."
+            autocomplete="off"
         >
-            Home
-        </button>
 
-        <button
-            data-hub-action="games"
-        >
-            🎮 Games
-        </button>
+        <kbd>
+            /
+        </kbd>
 
-        <button
-            data-hub-action="sports"
-        >
-            🏆 Sports
-        </button>
-
-        <button
-            data-hub-action="creator"
-        >
-            🛠️ Create
-        </button>
-
-        <button
-            data-hub-action="discover"
-        >
-            🌎 Discover
-        </button>
-
-    </nav>
+    </div>
 
 
-    <div class="uw-header-actions">
+
+    <div class="uw-top-actions">
 
         <button
             class="uw-icon-button"
-            title="Search Ultimate World"
-            aria-label="Search"
-            onclick="
-                const search =
-                document.querySelector('[data-hub-search]');
-                if (search) {
-                    search.focus();
-                    search.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }
-            "
+            onclick="uwNotify()"
+            title="Notifications"
         >
-            🔎
+            🔔
         </button>
 
-
         <button
-            class="uw-profile-button"
-            title="Your Ultimate World profile"
-            aria-label="Profile"
+            class="uw-icon-button"
+            onclick="uwProfile()"
+            title="Profile"
         >
             👤
         </button>
 
     </div>
 
+
 </header>
 
 
 
-<!-- =====================================================
-     MAIN
-     ===================================================== -->
+<!-- =========================================================
+     LAYOUT
+     ========================================================= -->
 
-<main id="ultimate-world-home">
-
-
-<!-- =====================================================
-     HERO
-     ===================================================== -->
-
-<section class="uw-hero">
+<div class="uw-layout">
 
 
-    <div class="uw-hero-grid"></div>
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="uw-sidebar">
 
 
-    <div class="uw-hero-content">
+        <div class="uw-sidebar-section">
 
-
-        <div class="uw-eyebrow">
-
-            <span class="uw-live-dot"></span>
-
-            THE WORLD IS YOURS
-
-        </div>
-
-
-        <h1>
-
-            <span data-hub-greeting>
-                WELCOME
-            </span>
-
-            TO
-
-            <strong>
-
-                ULTIMATE
-
-                <em>
-                    WORLD
-                </em>
-
-            </strong>
-
-        </h1>
-
-
-        <p class="uw-hero-description">
-
-            One enormous universe for games,
-            sports, creation, learning, discovery,
-            science, technology and everything
-            in between.
-
-        </p>
-
-
-        <div class="uw-hero-buttons">
+            <div class="uw-sidebar-title">
+                MAIN
+            </div>
 
 
             <button
-                class="uw-primary-button"
-                data-hub-action="games"
+                class="uw-sidebar-button active"
+                onclick="uwHome()"
             >
 
-                <span>
-                    🎮
-                </span>
+                <span>⌂</span>
 
-                ENTER GAMEVERSE
-
-                <span>
-                    →
-                </span>
+                <span>Command Center</span>
 
             </button>
 
 
             <button
-                class="uw-secondary-button"
-                data-hub-action="creator"
+                class="uw-sidebar-button"
+                onclick="uwSection('featured')"
             >
 
-                <span>
-                    🛠️
-                </span>
+                <span>✨</span>
 
-                CREATE SOMETHING
+                <span>Featured</span>
+
+            </button>
+
+
+            <button
+                class="uw-sidebar-button"
+                onclick="uwSection('discover')"
+            >
+
+                <span>🧭</span>
+
+                <span>Discover</span>
 
             </button>
 
@@ -265,1107 +1985,1216 @@
         </div>
 
 
-        <div class="uw-hero-mini-stats">
 
+        <div class="uw-sidebar-section">
 
-            <div>
-
-                <strong
-                    data-hub-stat-games
-                >
-                    0
-                </strong>
-
-                <span>
-                    Games
-                </span>
-
+            <div class="uw-sidebar-title">
+                UNIVERSES
             </div>
 
 
-            <div>
+            <button
+                class="uw-sidebar-button"
+                onclick="uwLaunch('games')"
+            >
 
-                <strong
-                    data-hub-stat-sports
-                >
-                    0
-                </strong>
+                <span>🎮</span>
 
-                <span>
-                    Sports
-                </span>
+                <span>GameVerse</span>
 
-            </div>
+            </button>
 
 
-            <div>
+            <button
+                class="uw-sidebar-button"
+                onclick="uwLaunch('sports')"
+            >
 
-                <strong>
-                    18+
-                </strong>
+                <span>🏆</span>
 
-                <span>
-                    Worlds
-                </span>
+                <span>Sports Center</span>
 
-            </div>
+            </button>
 
 
-            <div>
+            <button
+                class="uw-sidebar-button"
+                onclick="uwLaunch('creator')"
+            >
 
-                <strong
-                    data-hub-stat-projects
-                >
-                    0
-                </strong>
+                <span>🛠️</span>
 
-                <span>
-                    Projects
-                </span>
+                <span>Creator Studio</span>
 
-            </div>
+            </button>
+
+
+            <button
+                class="uw-sidebar-button"
+                onclick="uwLaunch('learn')"
+            >
+
+                <span>🧠</span>
+
+                <span>Knowledge</span>
+
+            </button>
+
+
+            <button
+                class="uw-sidebar-button"
+                onclick="uwLaunch('space')"
+            >
+
+                <span>🚀</span>
+
+                <span>Space</span>
+
+            </button>
+
+
+            <button
+                class="uw-sidebar-button"
+                onclick="uwLaunch('science')"
+            >
+
+                <span>🔬</span>
+
+                <span>Science</span>
+
+            </button>
 
 
         </div>
 
 
-    </div>
 
+        <div class="uw-sidebar-section">
 
-
-    <!-- =================================================
-         HERO VISUAL
-         ================================================= -->
-
-    <div class="uw-hero-visual">
-
-
-        <div class="uw-hero-orbit orbit-one"></div>
-
-        <div class="uw-hero-orbit orbit-two"></div>
-
-
-        <div class="uw-planet">
-
-            <div class="uw-planet-inner">
-                🌎
-            </div>
-
-        </div>
-
-
-        <div
-            class="uw-floating-card card-games"
-            data-hub-action="games"
-        >
-
-            <span>
-                🎮
-            </span>
-
-            <div>
-
-                <b>
-                    GAMEVERSE
-                </b>
-
-                <small>
-                    PLAY
-                </small>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="uw-floating-card card-sports"
-            data-hub-action="sports"
-        >
-
-            <span>
-                🏆
-            </span>
-
-            <div>
-
-                <b>
-                    SPORTS
-                </b>
-
-                <small>
-                    EXPLORE
-                </small>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="uw-floating-card card-create"
-            data-hub-action="creator"
-        >
-
-            <span>
-                🛠️
-            </span>
-
-            <div>
-
-                <b>
-                    CREATOR
-                </b>
-
-                <small>
-                    BUILD
-                </small>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     UNIVERSAL SEARCH
-     ===================================================== -->
-
-<section class="uw-search-section">
-
-
-    <div class="uw-section-heading">
-
-        <div>
-
-            <span>
-                SEARCH THE UNIVERSE
-            </span>
-
-            <h2>
-                What are you looking for?
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <div class="uw-search-box">
-
-
-        <span>
-            🔎
-        </span>
-
-
-        <input
-            type="search"
-            placeholder="Search games, sports, worlds, tools, science..."
-            autocomplete="off"
-            spellcheck="false"
-            data-hub-search
-            aria-label="Search Ultimate World"
-        >
-
-
-        <kbd>
-            SEARCH
-        </kbd>
-
-
-    </div>
-
-
-    <div
-        class="hub-search-results"
-        data-hub-search-results
-    ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     QUICK LAUNCH
-     ===================================================== -->
-
-<section class="uw-section">
-
-
-    <div class="uw-section-heading">
-
-        <div>
-
-            <span>
-                QUICK LAUNCH
-            </span>
-
-            <h2>
-                Jump anywhere.
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="uw-quick-grid"
-        data-hub-quick-actions
-    ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     FEATURED
-     ===================================================== -->
-
-<section class="uw-section">
-
-
-    <div class="uw-section-heading">
-
-
-        <div>
-
-            <span>
-                FEATURED
-            </span>
-
-            <h2>
-                The Ultimate highlights.
-            </h2>
-
-        </div>
-
-
-        <button
-            class="uw-view-all"
-            data-hub-action="discover"
-        >
-            View everything →
-        </button>
-
-
-    </div>
-
-
-    <div
-        class="uw-featured-grid"
-        data-hub-featured
-    ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     UNIVERSE
-     ===================================================== -->
-
-<section class="uw-section uw-universe-section">
-
-
-    <div class="uw-section-heading">
-
-
-        <div>
-
-            <span>
-                THE UNIVERSE
-            </span>
-
-            <h2>
-                Everything. One place.
-            </h2>
-
-            <p>
-                Ultimate World is built to keep expanding.
-            </p>
-
-        </div>
-
-
-    </div>
-
-
-    <div
-        class="uw-universe-grid"
-        data-world-sections
-    ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     BIG CATEGORY GRID
-     ===================================================== -->
-
-<section class="uw-section">
-
-
-    <div class="uw-section-heading">
-
-
-        <div>
-
-            <span>
-                EXPLORE
-            </span>
-
-            <h2>
-                Choose your world.
-            </h2>
-
-        </div>
-
-
-    </div>
-
-
-    <div class="uw-explore-grid">
-
-
-        <button
-            class="uw-explore-card explore-games"
-            data-hub-action="games"
-        >
-
-            <span>
-                🎮
-            </span>
-
-            <div>
-
-                <small>
-                    01
-                </small>
-
-                <h3>
-                    GameVerse
-                </h3>
-
-                <p>
-                    Discover a massive collection
-                    of high-quality games.
-                </p>
-
-            </div>
-
-            <b>
-                →
-            </b>
-
-        </button>
-
-
-        <button
-            class="uw-explore-card explore-sports"
-            data-hub-action="sports"
-        >
-
-            <span>
-                🏆
-            </span>
-
-            <div>
-
-                <small>
-                    02
-                </small>
-
-                <h3>
-                    Sports Center
-                </h3>
-
-                <p>
-                    Football, basketball, cricket,
-                    tennis and much more.
-                </p>
-
-            </div>
-
-            <b>
-                →
-            </b>
-
-        </button>
-
-
-        <button
-            class="uw-explore-card explore-creator"
-            data-hub-action="creator"
-        >
-
-            <span>
-                🛠️
-            </span>
-
-            <div>
-
-                <small>
-                    03
-                </small>
-
-                <h3>
-                    Creator Studio
-                </h3>
-
-                <p>
-                    Build your own games, apps
-                    and experiences.
-                </p>
-
-            </div>
-
-            <b>
-                →
-            </b>
-
-        </button>
-
-
-        <button
-            class="uw-explore-card explore-learn"
-            data-hub-action="learn"
-        >
-
-            <span>
-                🧠
-            </span>
-
-            <div>
-
-                <small>
-                    04
-                </small>
-
-                <h3>
-                    Learn
-                </h3>
-
-                <p>
-                    Explore knowledge, education,
-                    science and discovery.
-                </p>
-
-            </div>
-
-            <b>
-                →
-            </b>
-
-        </button>
-
-
-        <button
-            class="uw-explore-card explore-space"
-            data-hub-action="discover"
-        >
-
-            <span>
-                🚀
-            </span>
-
-            <div>
-
-                <small>
-                    05
-                </small>
-
-                <h3>
-                    Space
-                </h3>
-
-                <p>
-                    Explore the universe beyond Earth.
-                </p>
-
-            </div>
-
-            <b>
-                →
-            </b>
-
-        </button>
-
-
-        <button
-            class="uw-explore-card explore-tools"
-            data-hub-action="tools"
-        >
-
-            <span>
-                🧰
-            </span>
-
-            <div>
-
-                <small>
-                    06
-                </small>
-
-                <h3>
-                    Ultimate Tools
-                </h3>
-
-                <p>
-                    Powerful utilities for everyday use.
-                </p>
-
-            </div>
-
-            <b>
-                →
-            </b>
-
-        </button>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     RECENTLY OPENED
-     ===================================================== -->
-
-<section class="uw-section">
-
-
-    <div class="uw-section-heading">
-
-
-        <div>
-
-            <span>
+            <div class="uw-sidebar-title">
                 YOUR WORLD
-            </span>
-
-            <h2>
-                Recently opened
-            </h2>
-
-        </div>
+            </div>
 
 
-    </div>
-
-
-    <div
-        class="uw-recent-grid"
-        data-hub-recent
-    ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     YOUR STATS
-     ===================================================== -->
-
-<section class="uw-section">
-
-
-    <div class="uw-section-heading">
-
-
-        <div>
-
-            <span>
-                YOUR PROGRESS
-            </span>
-
-            <h2>
-                Your Ultimate World
-            </h2>
-
-        </div>
-
-
-    </div>
-
-
-    <div class="uw-stat-dashboard">
-
-
-        <div class="uw-big-stat">
-
-            <span>
-                🚀
-            </span>
-
-            <strong
-                data-hub-stat-launches
+            <button
+                class="uw-sidebar-button"
+                onclick="uwProfile()"
             >
-                0
-            </strong>
+
+                <span>👤</span>
+
+                <span>Profile</span>
+
+            </button>
+
+
+            <button
+                class="uw-sidebar-button"
+                onclick="uwAchievements()"
+            >
+
+                <span>🏅</span>
+
+                <span>Achievements</span>
+
+            </button>
+
+
+            <button
+                class="uw-sidebar-button"
+                onclick="uwSettings()"
+            >
+
+                <span>⚙️</span>
+
+                <span>Settings</span>
+
+            </button>
+
+
+        </div>
+
+
+
+        <div class="uw-sidebar-bottom">
 
             <small>
-                Launches
+                ULTIMATE LEVEL
             </small>
-
-        </div>
-
-
-        <div class="uw-big-stat">
-
-            <span>
-                🌎
-            </span>
-
-            <strong
-                data-hub-stat-visits
-            >
-                0
-            </strong>
-
-            <small>
-                Visits
-            </small>
-
-        </div>
-
-
-        <div class="uw-big-stat">
-
-            <span>
-                🛠️
-            </span>
-
-            <strong
-                data-hub-stat-projects
-            >
-                0
-            </strong>
-
-            <small>
-                Projects
-            </small>
-
-        </div>
-
-
-        <div class="uw-big-stat">
-
-            <span>
-                🏅
-            </span>
 
             <strong>
-                0
+                Explorer
             </strong>
 
-            <small>
-                Achievements
-            </small>
+            <div class="uw-progress">
+
+                <span></span>
+
+            </div>
 
         </div>
 
 
-    </div>
-
-
-</section>
+    </aside>
 
 
 
-<!-- =====================================================
-     CREATOR STUDIO BANNER
-     ===================================================== -->
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
 
-<section class="uw-creator-banner">
-
-
-    <div class="uw-creator-glow"></div>
+    <main class="uw-main" id="top">
 
 
-    <div class="uw-creator-content">
+
+        <!-- =================================================
+             WELCOME
+             ================================================= -->
+
+        <section class="uw-welcome">
 
 
-        <span>
-            🛠️ CREATOR STUDIO
-        </span>
+            <div class="uw-welcome-content">
+
+                <small class="uw-eyebrow">
+                    ULTIMATE WORLD COMMAND CENTER
+                </small>
 
 
-        <h2>
+                <h1>
 
-            Don't just use the world.
+                    Your universe.
 
-            <strong>
-                Build it.
-            </strong>
+                    <br>
 
-        </h2>
+                    <span>
+                        Your playground.
+                    </span>
 
-
-        <p>
-
-            Create games, apps, experiences
-            and ideas that become part of
-            your own Ultimate World.
-
-        </p>
+                </h1>
 
 
-        <button
-            class="uw-primary-button"
-            data-hub-action="creator"
+                <p>
+
+                    Everything is connected here.
+                    Games, sports, creativity,
+                    knowledge, discovery and
+                    experiences—all inside one
+                    expanding world.
+
+                </p>
+
+
+                <div class="uw-welcome-actions">
+
+                    <button
+                        class="uw-primary"
+                        onclick="uwLaunch('games')"
+                    >
+
+                        🎮
+
+                        PLAY GAMEVERSE
+
+                    </button>
+
+
+                    <button
+                        class="uw-secondary"
+                        onclick="uwLaunch('creator')"
+                    >
+
+                        🛠️
+
+                        CREATE SOMETHING
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             QUICK ACCESS
+             ================================================= -->
+
+        <section class="uw-section">
+
+
+            <div class="uw-section-header">
+
+                <div>
+
+                    <small>
+                        QUICK ACCESS
+                    </small>
+
+                    <h2>
+                        Jump anywhere.
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="uw-quick-grid">
+
+
+                <button
+                    class="uw-quick"
+                    onclick="uwLaunch('games')"
+                >
+
+                    <div class="uw-quick-icon">
+                        🎮
+                    </div>
+
+                    <strong>
+                        GameVerse
+                    </strong>
+
+                    <small>
+                        100+ games and
+                        experiences
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="uw-quick"
+                    onclick="uwLaunch('sports')"
+                >
+
+                    <div class="uw-quick-icon">
+                        🏆
+                    </div>
+
+                    <strong>
+                        Sports
+                    </strong>
+
+                    <small>
+                        Explore the sports
+                        universe
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="uw-quick"
+                    onclick="uwLaunch('creator')"
+                >
+
+                    <div class="uw-quick-icon">
+                        🛠️
+                    </div>
+
+                    <strong>
+                        Creator
+                    </strong>
+
+                    <small>
+                        Build your own
+                        experiences
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="uw-quick"
+                    onclick="uwLaunch('learn')"
+                >
+
+                    <div class="uw-quick-icon">
+                        🧠
+                    </div>
+
+                    <strong>
+                        Knowledge
+                    </strong>
+
+                    <small>
+                        Learn and discover
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="uw-quick"
+                    onclick="uwLaunch('space')"
+                >
+
+                    <div class="uw-quick-icon">
+                        🚀
+                    </div>
+
+                    <strong>
+                        Space
+                    </strong>
+
+                    <small>
+                        Explore beyond Earth
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="uw-quick"
+                    onclick="uwLaunch('tools')"
+                >
+
+                    <div class="uw-quick-icon">
+                        🧰
+                    </div>
+
+                    <strong>
+                        Tools
+                    </strong>
+
+                    <small>
+                        Useful digital tools
+                    </small>
+
+                </button>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             FEATURED
+             ================================================= -->
+
+        <section
+            class="uw-section"
+            id="featured"
         >
 
-            OPEN CREATOR STUDIO
+
+            <div class="uw-section-header">
+
+                <div>
+
+                    <small>
+                        FEATURED
+                    </small>
+
+                    <h2>
+                        What's happening in your universe?
+                    </h2>
+
+                    <p>
+                        Your gateway to the biggest parts
+                        of Ultimate World.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="uw-view-all"
+                    onclick="uwLaunch('discover')"
+                >
+                    Explore →
+                </button>
+
+            </div>
+
+
+
+            <div class="uw-feature-grid">
+
+
+                <button
+                    class="uw-feature"
+                    onclick="uwLaunch('games')"
+                >
+
+                    <span class="uw-feature-icon">
+                        🎮
+                    </span>
+
+                    <small>
+                        GAMEVERSE
+                    </small>
+
+                    <h3>
+                        100+ games.
+                    </h3>
+
+                    <p>
+                        A growing collection of
+                        properly designed games—not
+                        random filler.
+                    </p>
+
+                </button>
+
+
+                <button
+                    class="uw-feature"
+                    onclick="uwLaunch('sports')"
+                >
+
+                    <span class="uw-feature-icon">
+                        ⚽
+                    </span>
+
+                    <small>
+                        SPORTS
+                    </small>
+
+                    <h3>
+                        Every sport.
+                    </h3>
+
+                    <p>
+                        Football, cricket,
+                        basketball, tennis and more.
+                    </p>
+
+                </button>
+
+
+                <button
+                    class="uw-feature"
+                    onclick="uwLaunch('creator')"
+                >
+
+                    <span class="uw-feature-icon">
+                        🛠️
+                    </span>
+
+                    <small>
+                        CREATE
+                    </small>
+
+                    <h3>
+                        Build.
+                    </h3>
+
+                    <p>
+                        Turn ideas into your own
+                        digital experiences.
+                    </p>
+
+                </button>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SPORTS CENTER
+             ================================================= -->
+
+        <section
+            class="uw-section"
+            id="sports"
+        >
+
+
+            <div class="uw-section-header">
+
+                <div>
+
+                    <small>
+                        SPORTS CENTER
+                    </small>
+
+                    <h2>
+                        The world of sport.
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="uw-view-all"
+                    onclick="uwLaunch('sports')"
+                >
+                    Open Sports →
+                </button>
+
+            </div>
+
+
+
+            <div class="uw-sports-layout">
+
+
+                <div class="uw-sports-main">
+
+                    <small class="uw-eyebrow">
+                        MULTI-SPORT UNIVERSE
+                    </small>
+
+                    <h3>
+                        From football to Formula 1.
+                    </h3>
+
+                    <p>
+                        Ultimate World is designed to
+                        give sports their own dedicated
+                        space—with games, information,
+                        challenges and experiences.
+                    </p>
+
+
+                    <div class="uw-sport-icons">
+
+
+                        <div class="uw-sport">
+                            <span>⚽</span>
+                            <small>FOOTBALL</small>
+                        </div>
+
+
+                        <div class="uw-sport">
+                            <span>🏏</span>
+                            <small>CRICKET</small>
+                        </div>
+
+
+                        <div class="uw-sport">
+                            <span>🏀</span>
+                            <small>BASKETBALL</small>
+                        </div>
+
+
+                        <div class="uw-sport">
+                            <span>🎾</span>
+                            <small>TENNIS</small>
+                        </div>
+
+
+                        <div class="uw-sport">
+                            <span>🏎️</span>
+                            <small>RACING</small>
+                        </div>
+
+
+                        <div class="uw-sport">
+                            <span>🏊</span>
+                            <small>MORE</small>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="uw-live-panel">
+
+                    <div class="uw-live-title">
+
+                        <span class="uw-live-dot"></span>
+
+                        SPORTS HUB
+
+                    </div>
+
+
+                    <div class="uw-score">
+
+                        <div class="uw-score-top">
+
+                            <span>
+                                FEATURED
+                            </span>
+
+                            <span>
+                                LIVE SYSTEM
+                            </span>
+
+                        </div>
+
+
+                        <div class="uw-score-teams">
+
+                            <div class="uw-team">
+                                Football
+                            </div>
+
+                            <div class="uw-score-number">
+                                ⚽
+                            </div>
+
+                            <div class="uw-team">
+                                Explore
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="uw-primary"
+                        onclick="uwLaunch('sports')"
+                        style="
+                            width:100%;
+                            margin-top:12px;
+                        "
+                    >
+
+                        OPEN SPORTS CENTER →
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CREATOR STUDIO
+             ================================================= -->
+
+        <section
+            class="uw-section"
+            id="creator"
+        >
+
+
+            <div class="uw-creator">
+
+
+                <div class="uw-creator-content">
+
+                    <small>
+                        CREATOR STUDIO
+                    </small>
+
+
+                    <h2>
+                        Don't just use the world.
+                        <br>
+                        <span>
+                            Build it.
+                        </span>
+                    </h2>
+
+
+                    <p>
+                        Ultimate World will include
+                        a creation environment where
+                        ideas can become games,
+                        applications and interactive
+                        experiences.
+                    </p>
+
+
+                    <button
+                        class="uw-primary"
+                        onclick="uwLaunch('creator')"
+                    >
+
+                        🛠️ OPEN CREATOR STUDIO →
+
+                    </button>
+
+                </div>
+
+
+
+                <div class="uw-creator-art">
+
+                    <div class="uw-creator-box">
+                        &lt;/&gt;
+                    </div>
+
+                    <div class="uw-creator-box">
+                        🎮
+                    </div>
+
+                    <div class="uw-creator-box">
+                        🚀
+                    </div>
+
+                    <div class="uw-creator-box">
+                        ✨
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ACTIVITY
+             ================================================= -->
+
+        <section class="uw-section">
+
+
+            <div class="uw-bottom-grid">
+
+
+                <div class="uw-panel">
+
+                    <h3>
+                        🌟 Your Ultimate Journey
+                    </h3>
+
+
+                    <div class="uw-activity">
+
+                        <div class="uw-activity-icon">
+                            🎮
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                GameVerse
+                            </strong>
+
+                            <small>
+                                Ready to explore
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="uw-activity">
+
+                        <div class="uw-activity-icon">
+                            🏆
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Sports Center
+                            </strong>
+
+                            <small>
+                                Your sports hub awaits
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="uw-activity">
+
+                        <div class="uw-activity-icon">
+                            🛠️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Creator Studio
+                            </strong>
+
+                            <small>
+                                Something new can be built
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="uw-panel">
+
+                    <h3>
+                        🚀 Ultimate World Expansion
+                    </h3>
+
+
+                    <div class="uw-activity">
+
+                        <div class="uw-activity-icon">
+                            🌎
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                More worlds
+                            </strong>
+
+                            <small>
+                                New sections can be added
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="uw-activity">
+
+                        <div class="uw-activity-icon">
+                            🎮
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                More games
+                            </strong>
+
+                            <small>
+                                GameVerse keeps growing
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="uw-activity">
+
+                        <div class="uw-activity-icon">
+                            ✨
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                More possibilities
+                            </strong>
+
+                            <small>
+                                The universe has no fixed limit
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
+
+        <footer class="uw-footer">
 
             <span>
-                →
+                🌎 Ultimate World
             </span>
-
-        </button>
-
-
-    </div>
-
-
-    <div class="uw-creator-visual">
-
-
-        <div>
-            &lt;/&gt;
-        </div>
-
-
-        <div>
-            🎮
-        </div>
-
-
-        <div>
-            🚀
-        </div>
-
-
-        <div>
-            ✨
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     FUTURE ROADMAP
-     ===================================================== -->
-
-<section class="uw-section uw-roadmap">
-
-
-    <div class="uw-section-heading">
-
-
-        <div>
 
             <span>
-                THE FUTURE
+                One universe. Endless possibilities.
             </span>
 
-            <h2>
-                Ultimate World keeps growing.
-            </h2>
+        </footer>
 
-        </div>
 
+    </main>
 
-    </div>
+</div>
 
 
-    <div class="uw-roadmap-grid">
-
-
-        <div class="uw-roadmap-card">
-
-            <span>
-                🎮
-            </span>
-
-            <strong>
-                100+ Games
-            </strong>
-
-            <p>
-                A huge library of properly
-                designed games.
-            </p>
-
-        </div>
-
-
-        <div class="uw-roadmap-card">
-
-            <span>
-                🏆
-            </span>
-
-            <strong>
-                All Sports
-            </strong>
-
-            <p>
-                A central place for the world's
-                major sports.
-            </p>
-
-        </div>
-
-
-        <div class="uw-roadmap-card">
-
-            <span>
-                🛠️
-            </span>
-
-            <strong>
-                App Creator
-            </strong>
-
-            <p>
-                Build and experiment with
-                your own creations.
-            </p>
-
-        </div>
-
-
-        <div class="uw-roadmap-card">
-
-            <span>
-                🌎
-            </span>
-
-            <strong>
-                Infinite Expansion
-            </strong>
-
-            <p>
-                New worlds and features can
-                keep being added.
-            </p>
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     FOOTER
-     ===================================================== -->
-
-<footer class="uw-footer">
-
-
-    <div class="uw-footer-brand">
-
-
-        <div class="uw-logo">
-
-            <span class="uw-logo-symbol">
-                🌎
-            </span>
-
-            <span class="uw-logo-text">
-
-                ULTIMATE
-
-                <b>
-                    WORLD
-                </b>
-
-            </span>
-
-        </div>
-
-
-        <p>
-
-            One universe.
-            Endless possibilities.
-
-        </p>
-
-
-    </div>
-
-
-
-    <div class="uw-footer-links">
-
-
-        <div>
-
-            <strong>
-                EXPLORE
-            </strong>
-
-            <button data-hub-action="games">
-                Games
-            </button>
-
-            <button data-hub-action="sports">
-                Sports
-            </button>
-
-            <button data-hub-action="discover">
-                Discover
-            </button>
-
-        </div>
-
-
-        <div>
-
-            <strong>
-                CREATE
-            </strong>
-
-            <button data-hub-action="creator">
-                Creator Studio
-            </button>
-
-            <button data-hub-action="learn">
-                Learn
-            </button>
-
-            <button data-hub-action="tools">
-                Tools
-            </button>
-
-        </div>
-
-
-        <div>
-
-            <strong>
-                ULTIMATE WORLD
-            </strong>
-
-            <button>
-                About
-            </button>
-
-            <button>
-                Achievements
-            </button>
-
-            <button>
-                Settings
-            </button>
-
-        </div>
-
-
-    </div>
-
-
-
-    <div class="uw-footer-bottom">
-
-        <span>
-            © 2026 Ultimate World
-        </span>
-
-        <span>
-            Built to keep growing. 🌎
-        </span>
-
-    </div>
-
-
-</footer>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
-
-<script src="data.js"></script>
-
-<script src="games.js"></script>
-
-<script src="sports.js"></script>
-
-<script src="creator.js"></script>
-
-<script src="world.js"></script>
-
-<script src="hub.js"></script>
-
-<script src="app.js"></script>
-
-
-<!-- =====================================================
-     SAFETY FALLBACK
-     ===================================================== -->
 
 <script>
 
+    /* =========================================================
+       ULTIMATE WORLD COMMAND CENTER JS
+       ========================================================= */
+
+
+    const search =
+        document.getElementById(
+            "uwSearch"
+        );
+
+
     /*
-     * Ultimate World boot check.
-     *
-     * This doesn't replace any of our other JavaScript.
-     * It simply tells us whether the central hub loaded.
+     * Search shortcut.
      */
 
-    window.addEventListener(
-        "load",
-        function () {
+    document.addEventListener(
+        "keydown",
+        function(event) {
 
             if (
-                window.UltimateWorldHub
+                event.key === "/" &&
+                document.activeElement !== search
             ) {
 
-                console.log(
-                    "🌎 Ultimate World Home: ONLINE"
-                );
+                event.preventDefault();
 
-            } else {
-
-                console.warn(
-                    "Ultimate World Hub has not loaded yet."
-                );
+                search.focus();
 
             }
 
         }
     );
+
+
+    /*
+     * Universal search.
+     */
+
+    if (search) {
+
+        search.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    const query =
+                        search.value.trim();
+
+                    if (!query) return;
+
+
+                    localStorage.setItem(
+                        "uw_last_search",
+                        query
+                    );
+
+
+                    alert(
+                        "Ultimate Search\n\nSearching for: " +
+                        query +
+                        "\n\nThe universal search engine will connect to the full Ultimate World database as we build it."
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Launch a universe.
+     */
+
+    function uwLaunch(section) {
+
+        localStorage.setItem(
+            "uw_requested_section",
+            section
+        );
+
+
+        /*
+         * These destinations will be connected
+         * to their actual pages as we build them.
+         *
+         * For now the command center remembers
+         * exactly what the user selected.
+         */
+
+        const messages = {
+
+            games:
+                "🎮 GameVerse is ready to be built.",
+
+            sports:
+                "🏆 Sports Center is ready to be built.",
+
+            creator:
+                "🛠️ Creator Studio is ready to be built.",
+
+            learn:
+                "🧠 Knowledge Universe is ready to be built.",
+
+            space:
+                "🚀 Space Universe is ready to be built.",
+
+            science:
+                "🔬 Science Universe is ready to be built.",
+
+            tools:
+                "🧰 Ultimate Tools are ready to be built.",
+
+            discover:
+                "🧭 Discover Universe is ready to be built."
+
+        };
+
+
+        alert(
+            messages[section] ||
+            "🌎 Entering Ultimate World..."
+        );
+
+    }
+
+
+    /*
+     * Home.
+     */
+
+    function uwHome() {
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    }
+
+
+    /*
+     * Section navigation.
+     */
+
+    function uwSection(id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (!element) {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+            return;
+
+        }
+
+
+        element.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+
+        });
+
+    }
+
+
+    /*
+     * Notifications.
+     */
+
+    function uwNotify() {
+
+        alert(
+            "🔔 Notifications\n\nYour Ultimate World notifications will appear here."
+        );
+
+    }
+
+
+    /*
+     * Profile.
+     */
+
+    function uwProfile() {
+
+        alert(
+            "👤 Profile\n\nYour Ultimate World profile, level, achievements and progress will appear here."
+        );
+
+    }
+
+
+    /*
+     * Achievements.
+     */
+
+    function uwAchievements() {
+
+        alert(
+            "🏅 Achievements\n\nYour achievements system will appear here."
+        );
+
+    }
+
+
+    /*
+     * Settings.
+     */
+
+    function uwSettings() {
+
+        alert(
+            "⚙️ Settings\n\nUltimate World settings will appear here."
+        );
+
+    }
+
+
+    /*
+     * Read the destination requested
+     * by index.html.
+     */
+
+    const requestedSection =
+        localStorage.getItem(
+            "uw_requested_section"
+        );
+
+
+    if (requestedSection) {
+
+        /*
+         * Keep the value available for the
+         * future routing system.
+         */
+
+        document.body.dataset.section =
+            requestedSection;
+
+    }
+
 
 </script>
 
