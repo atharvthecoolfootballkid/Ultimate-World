@@ -17,10 +17,14 @@
 
     <meta
         name="description"
-        content="Ultimate World — games, sports, creation, learning, discovery and more."
+        content="Ultimate World — games, sports, creation, learning, discovery, technology, science and more."
     >
 
     <title>Ultimate World 🌎</title>
+
+    <!-- =================================================
+         ULTIMATE WORLD STYLES
+         ================================================= -->
 
     <link
         rel="stylesheet"
@@ -32,6 +36,11 @@
         href="ultimate.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="home.css"
+    >
+
 </head>
 
 
@@ -39,7 +48,23 @@
 
 
 <!-- =====================================================
-     TOP NAVIGATION
+     BACKGROUND
+     ===================================================== -->
+
+<div class="uw-background">
+
+    <div class="uw-background-glow uw-glow-one"></div>
+
+    <div class="uw-background-glow uw-glow-two"></div>
+
+    <div class="uw-background-stars"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+     HEADER
      ===================================================== -->
 
 <header class="uw-header">
@@ -55,14 +80,22 @@
         </span>
 
         <span class="uw-logo-text">
+
             ULTIMATE
-            <b>WORLD</b>
+
+            <b>
+                WORLD
+            </b>
+
         </span>
 
     </a>
 
 
-    <nav class="uw-main-nav">
+    <nav
+        class="uw-main-nav"
+        aria-label="Main navigation"
+    >
 
         <button
             data-hub-tab="home"
@@ -89,6 +122,12 @@
             🛠️ Create
         </button>
 
+        <button
+            data-hub-action="discover"
+        >
+            🌎 Discover
+        </button>
+
     </nav>
 
 
@@ -96,15 +135,28 @@
 
         <button
             class="uw-icon-button"
-            title="Search"
-            onclick="document.querySelector('[data-hub-search]').focus()"
+            title="Search Ultimate World"
+            aria-label="Search"
+            onclick="
+                const search =
+                document.querySelector('[data-hub-search]');
+                if (search) {
+                    search.focus();
+                    search.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            "
         >
             🔎
         </button>
 
+
         <button
             class="uw-profile-button"
             title="Your Ultimate World profile"
+            aria-label="Profile"
         >
             👤
         </button>
@@ -119,7 +171,7 @@
      MAIN
      ===================================================== -->
 
-<main>
+<main id="ultimate-world-home">
 
 
 <!-- =====================================================
@@ -128,14 +180,12 @@
 
 <section class="uw-hero">
 
-    <div class="uw-hero-orbit orbit-one"></div>
-
-    <div class="uw-hero-orbit orbit-two"></div>
 
     <div class="uw-hero-grid"></div>
 
 
     <div class="uw-hero-content">
+
 
         <div class="uw-eyebrow">
 
@@ -155,8 +205,13 @@
             TO
 
             <strong>
+
                 ULTIMATE
-                <em>WORLD</em>
+
+                <em>
+                    WORLD
+                </em>
+
             </strong>
 
         </h1>
@@ -164,25 +219,31 @@
 
         <p class="uw-hero-description">
 
-            One enormous universe for games, sports,
-            creation, learning, discovery, technology,
-            science and everything in between.
+            One enormous universe for games,
+            sports, creation, learning, discovery,
+            science, technology and everything
+            in between.
 
         </p>
 
 
         <div class="uw-hero-buttons">
 
+
             <button
                 class="uw-primary-button"
                 data-hub-action="games"
             >
 
-                🎮
+                <span>
+                    🎮
+                </span>
 
                 ENTER GAMEVERSE
 
-                <span>→</span>
+                <span>
+                    →
+                </span>
 
             </button>
 
@@ -192,16 +253,20 @@
                 data-hub-action="creator"
             >
 
-                🛠️
+                <span>
+                    🛠️
+                </span>
 
                 CREATE SOMETHING
 
             </button>
 
+
         </div>
 
 
         <div class="uw-hero-mini-stats">
+
 
             <div>
 
@@ -260,12 +325,25 @@
 
             </div>
 
+
         </div>
+
 
     </div>
 
 
+
+    <!-- =================================================
+         HERO VISUAL
+         ================================================= -->
+
     <div class="uw-hero-visual">
+
+
+        <div class="uw-hero-orbit orbit-one"></div>
+
+        <div class="uw-hero-orbit orbit-two"></div>
+
 
         <div class="uw-planet">
 
@@ -276,7 +354,10 @@
         </div>
 
 
-        <div class="uw-floating-card card-games">
+        <div
+            class="uw-floating-card card-games"
+            data-hub-action="games"
+        >
 
             <span>
                 🎮
@@ -297,7 +378,10 @@
         </div>
 
 
-        <div class="uw-floating-card card-sports">
+        <div
+            class="uw-floating-card card-sports"
+            data-hub-action="sports"
+        >
 
             <span>
                 🏆
@@ -318,7 +402,10 @@
         </div>
 
 
-        <div class="uw-floating-card card-create">
+        <div
+            class="uw-floating-card card-create"
+            data-hub-action="creator"
+        >
 
             <span>
                 🛠️
@@ -338,6 +425,7 @@
 
         </div>
 
+
     </div>
 
 </section>
@@ -350,35 +438,46 @@
 
 <section class="uw-search-section">
 
+
     <div class="uw-section-heading">
 
-        <span>
-            SEARCH THE UNIVERSE
-        </span>
+        <div>
 
-        <h2>
-            What are you looking for?
-        </h2>
+            <span>
+                SEARCH THE UNIVERSE
+            </span>
+
+            <h2>
+                What are you looking for?
+            </h2>
+
+        </div>
 
     </div>
 
 
     <div class="uw-search-box">
 
+
         <span>
             🔎
         </span>
 
+
         <input
             type="search"
-            placeholder="Search games, sports, worlds, tools..."
+            placeholder="Search games, sports, worlds, tools, science..."
             autocomplete="off"
+            spellcheck="false"
             data-hub-search
+            aria-label="Search Ultimate World"
         >
+
 
         <kbd>
             SEARCH
         </kbd>
+
 
     </div>
 
@@ -387,6 +486,7 @@
         class="hub-search-results"
         data-hub-search-results
     ></div>
+
 
 </section>
 
@@ -397,6 +497,7 @@
      ===================================================== -->
 
 <section class="uw-section">
+
 
     <div class="uw-section-heading">
 
@@ -420,6 +521,7 @@
         data-hub-quick-actions
     ></div>
 
+
 </section>
 
 
@@ -430,7 +532,9 @@
 
 <section class="uw-section">
 
+
     <div class="uw-section-heading">
+
 
         <div>
 
@@ -452,6 +556,7 @@
             View everything →
         </button>
 
+
     </div>
 
 
@@ -460,17 +565,20 @@
         data-hub-featured
     ></div>
 
+
 </section>
 
 
 
 <!-- =====================================================
-     ULTIMATE UNIVERSE
+     UNIVERSE
      ===================================================== -->
 
 <section class="uw-section uw-universe-section">
 
+
     <div class="uw-section-heading">
+
 
         <div>
 
@@ -488,6 +596,7 @@
 
         </div>
 
+
     </div>
 
 
@@ -495,6 +604,239 @@
         class="uw-universe-grid"
         data-world-sections
     ></div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     BIG CATEGORY GRID
+     ===================================================== -->
+
+<section class="uw-section">
+
+
+    <div class="uw-section-heading">
+
+
+        <div>
+
+            <span>
+                EXPLORE
+            </span>
+
+            <h2>
+                Choose your world.
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="uw-explore-grid">
+
+
+        <button
+            class="uw-explore-card explore-games"
+            data-hub-action="games"
+        >
+
+            <span>
+                🎮
+            </span>
+
+            <div>
+
+                <small>
+                    01
+                </small>
+
+                <h3>
+                    GameVerse
+                </h3>
+
+                <p>
+                    Discover a massive collection
+                    of high-quality games.
+                </p>
+
+            </div>
+
+            <b>
+                →
+            </b>
+
+        </button>
+
+
+        <button
+            class="uw-explore-card explore-sports"
+            data-hub-action="sports"
+        >
+
+            <span>
+                🏆
+            </span>
+
+            <div>
+
+                <small>
+                    02
+                </small>
+
+                <h3>
+                    Sports Center
+                </h3>
+
+                <p>
+                    Football, basketball, cricket,
+                    tennis and much more.
+                </p>
+
+            </div>
+
+            <b>
+                →
+            </b>
+
+        </button>
+
+
+        <button
+            class="uw-explore-card explore-creator"
+            data-hub-action="creator"
+        >
+
+            <span>
+                🛠️
+            </span>
+
+            <div>
+
+                <small>
+                    03
+                </small>
+
+                <h3>
+                    Creator Studio
+                </h3>
+
+                <p>
+                    Build your own games, apps
+                    and experiences.
+                </p>
+
+            </div>
+
+            <b>
+                →
+            </b>
+
+        </button>
+
+
+        <button
+            class="uw-explore-card explore-learn"
+            data-hub-action="learn"
+        >
+
+            <span>
+                🧠
+            </span>
+
+            <div>
+
+                <small>
+                    04
+                </small>
+
+                <h3>
+                    Learn
+                </h3>
+
+                <p>
+                    Explore knowledge, education,
+                    science and discovery.
+                </p>
+
+            </div>
+
+            <b>
+                →
+            </b>
+
+        </button>
+
+
+        <button
+            class="uw-explore-card explore-space"
+            data-hub-action="discover"
+        >
+
+            <span>
+                🚀
+            </span>
+
+            <div>
+
+                <small>
+                    05
+                </small>
+
+                <h3>
+                    Space
+                </h3>
+
+                <p>
+                    Explore the universe beyond Earth.
+                </p>
+
+            </div>
+
+            <b>
+                →
+            </b>
+
+        </button>
+
+
+        <button
+            class="uw-explore-card explore-tools"
+            data-hub-action="tools"
+        >
+
+            <span>
+                🧰
+            </span>
+
+            <div>
+
+                <small>
+                    06
+                </small>
+
+                <h3>
+                    Ultimate Tools
+                </h3>
+
+                <p>
+                    Powerful utilities for everyday use.
+                </p>
+
+            </div>
+
+            <b>
+                →
+            </b>
+
+        </button>
+
+
+    </div>
+
 
 </section>
 
@@ -506,7 +848,9 @@
 
 <section class="uw-section">
 
+
     <div class="uw-section-heading">
+
 
         <div>
 
@@ -520,6 +864,7 @@
 
         </div>
 
+
     </div>
 
 
@@ -527,6 +872,7 @@
         class="uw-recent-grid"
         data-hub-recent
     ></div>
+
 
 </section>
 
@@ -538,7 +884,9 @@
 
 <section class="uw-section">
 
+
     <div class="uw-section-heading">
+
 
         <div>
 
@@ -551,6 +899,7 @@
             </h2>
 
         </div>
+
 
     </div>
 
@@ -631,37 +980,48 @@
 
         </div>
 
+
     </div>
+
 
 </section>
 
 
 
 <!-- =====================================================
-     CREATOR PROMO
+     CREATOR STUDIO BANNER
      ===================================================== -->
 
 <section class="uw-creator-banner">
+
 
     <div class="uw-creator-glow"></div>
 
 
     <div class="uw-creator-content">
 
+
         <span>
             🛠️ CREATOR STUDIO
         </span>
 
+
         <h2>
+
             Don't just use the world.
-            <strong>Build it.</strong>
+
+            <strong>
+                Build it.
+            </strong>
+
         </h2>
+
 
         <p>
 
-            Create games, apps, experiences and
-            ideas that become part of your own
-            Ultimate World.
+            Create games, apps, experiences
+            and ideas that become part of
+            your own Ultimate World.
 
         </p>
 
@@ -679,28 +1039,143 @@
 
         </button>
 
+
     </div>
 
 
     <div class="uw-creator-visual">
 
+
         <div>
             &lt;/&gt;
         </div>
+
 
         <div>
             🎮
         </div>
 
+
         <div>
             🚀
         </div>
+
 
         <div>
             ✨
         </div>
 
+
     </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FUTURE ROADMAP
+     ===================================================== -->
+
+<section class="uw-section uw-roadmap">
+
+
+    <div class="uw-section-heading">
+
+
+        <div>
+
+            <span>
+                THE FUTURE
+            </span>
+
+            <h2>
+                Ultimate World keeps growing.
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="uw-roadmap-grid">
+
+
+        <div class="uw-roadmap-card">
+
+            <span>
+                🎮
+            </span>
+
+            <strong>
+                100+ Games
+            </strong>
+
+            <p>
+                A huge library of properly
+                designed games.
+            </p>
+
+        </div>
+
+
+        <div class="uw-roadmap-card">
+
+            <span>
+                🏆
+            </span>
+
+            <strong>
+                All Sports
+            </strong>
+
+            <p>
+                A central place for the world's
+                major sports.
+            </p>
+
+        </div>
+
+
+        <div class="uw-roadmap-card">
+
+            <span>
+                🛠️
+            </span>
+
+            <strong>
+                App Creator
+            </strong>
+
+            <p>
+                Build and experiment with
+                your own creations.
+            </p>
+
+        </div>
+
+
+        <div class="uw-roadmap-card">
+
+            <span>
+                🌎
+            </span>
+
+            <strong>
+                Infinite Expansion
+            </strong>
+
+            <p>
+                New worlds and features can
+                keep being added.
+            </p>
+
+        </div>
+
+
+    </div>
+
 
 </section>
 
@@ -712,7 +1187,9 @@
 
 <footer class="uw-footer">
 
+
     <div class="uw-footer-brand">
+
 
         <div class="uw-logo">
 
@@ -723,7 +1200,10 @@
             <span class="uw-logo-text">
 
                 ULTIMATE
-                <b>WORLD</b>
+
+                <b>
+                    WORLD
+                </b>
 
             </span>
 
@@ -737,10 +1217,13 @@
 
         </p>
 
+
     </div>
 
 
+
     <div class="uw-footer-links">
+
 
         <div>
 
@@ -804,7 +1287,9 @@
 
         </div>
 
+
     </div>
+
 
 
     <div class="uw-footer-bottom">
@@ -819,6 +1304,7 @@
 
     </div>
 
+
 </footer>
 
 
@@ -827,7 +1313,7 @@
 
 
 <!-- =====================================================
-     SCRIPTS
+     JAVASCRIPT
      ===================================================== -->
 
 <script src="data.js"></script>
@@ -843,6 +1329,45 @@
 <script src="hub.js"></script>
 
 <script src="app.js"></script>
+
+
+<!-- =====================================================
+     SAFETY FALLBACK
+     ===================================================== -->
+
+<script>
+
+    /*
+     * Ultimate World boot check.
+     *
+     * This doesn't replace any of our other JavaScript.
+     * It simply tells us whether the central hub loaded.
+     */
+
+    window.addEventListener(
+        "load",
+        function () {
+
+            if (
+                window.UltimateWorldHub
+            ) {
+
+                console.log(
+                    "🌎 Ultimate World Home: ONLINE"
+                );
+
+            } else {
+
+                console.warn(
+                    "Ultimate World Hub has not loaded yet."
+                );
+
+            }
+
+        }
+    );
+
+</script>
 
 
 </body>
