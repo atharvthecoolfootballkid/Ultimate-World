@@ -1,25 +1,33 @@
 /* ============================================================
    ULTIMATE WORLD
-   GAME ENGINE v1.0
+   GAME ENGINE v2.0
    ------------------------------------------------------------
-   Core systems shared by Ultimate World's games.
+   Core engine for Ultimate World.
 
-   Designed for:
+   Built for:
    • 100+ games
-   • Sports games
+   • Sports
    • Racing
    • Arcade
    • Puzzle
    • Strategy
    • Adventure
    • Simulation
-   • Multiplayer-ready architecture
    • Achievements
    • XP
    • Coins
+   • Levels
    • High scores
    • Statistics
-   • Save system
+   • Favorites
+   • Daily rewards
+   • Particles
+   • Sound
+   • Input
+   • Game registry
+   • Game sessions
+   • Mobile controls
+   • Future multiplayer
    ============================================================ */
 
 "use strict";
@@ -27,33 +35,48 @@
 
 /* ============================================================
    GLOBAL NAMESPACE
-   ============================================================ */
+============================================================ */
 
-window.UltimateWorld = window.UltimateWorld || {};
+window.UltimateWorld =
+    window.UltimateWorld || {};
+
+const UltimateWorld =
+    window.UltimateWorld;
 
 
 /* ============================================================
-   VERSION
-   ============================================================ */
+   ENGINE INFORMATION
+============================================================ */
 
-UltimateWorld.version = "1.0.0";
+UltimateWorld.version = "2.0.0";
 
 UltimateWorld.engine = {
     name: "Ultimate World Game Engine",
-    version: UltimateWorld.version
+    version: UltimateWorld.version,
+    status: "ready"
 };
 
 
 /* ============================================================
    STORAGE
-   ============================================================ */
+============================================================ */
 
 const UW_STORAGE = {
+
     PROFILE: "uw_profile",
+
     SETTINGS: "uw_settings",
+
     GAMES: "uw_games",
+
     ACHIEVEMENTS: "uw_achievements",
-    INVENTORY: "uw_inventory"
+
+    INVENTORY: "uw_inventory",
+
+    LEADERBOARD: "uw_local_leaderboard",
+
+    DAILY: "uw_daily_reward"
+
 };
 
 
@@ -78,7 +101,9 @@ function uwLoad(key, fallback = null){
         );
 
         return fallback;
+
     }
+
 }
 
 
@@ -101,13 +126,15 @@ function uwSave(key, value){
         );
 
         return false;
+
     }
+
 }
 
 
 /* ============================================================
-   PLAYER PROFILE
-   ============================================================ */
+   DEFAULT PROFILE
+============================================================ */
 
 const defaultProfile = {
 
@@ -138,11 +165,28 @@ const defaultProfile = {
 };
 
 
+/* ============================================================
+   PROFILE
+============================================================ */
+
 UltimateWorld.profile =
     uwLoad(
         UW_STORAGE.PROFILE,
         defaultProfile
     );
+
+
+/*
+ * Protect against old/incomplete saves.
+ */
+
+UltimateWorld.profile = {
+
+    ...defaultProfile,
+
+    ...UltimateWorld.profile
+
+};
 
 
 function saveProfile(){
@@ -157,7 +201,7 @@ function saveProfile(){
 
 /* ============================================================
    XP SYSTEM
-   ============================================================ */
+============================================================ */
 
 const XP_TABLE = {
 
@@ -174,6 +218,19 @@ const XP_TABLE = {
 };
 
 
+function xpRequiredForLevel(level){
+
+    return Math.floor(
+        100 +
+        Math.pow(
+            level,
+            1.55
+        ) * 75
+    );
+
+}
+
+
 function addXP(amount){
 
     amount =
@@ -182,23 +239,14 @@ function addXP(amount){
             Number(amount) || 0
         );
 
-    UltimateWorld.profile.xp += amount;
+    UltimateWorld.profile.xp +=
+        amount;
 
     checkLevelUp();
 
     saveProfile();
 
     return UltimateWorld.profile.xp;
-
-}
-
-
-function xpRequiredForLevel(level){
-
-    return Math.floor(
-        100 +
-        Math.pow(level, 1.55) * 75
-    );
 
 }
 
@@ -229,7 +277,7 @@ function checkLevelUp(){
         ){
 
             UltimateWorld.toast(
-                "LEVEL UP! You reached Level " +
+                "⭐ LEVEL UP! Level " +
                 UltimateWorld.profile.level
             );
 
@@ -248,7 +296,9 @@ function getLevelProgress(){
         UltimateWorld.profile.level;
 
     const required =
-        xpRequiredForLevel(level);
+        xpRequiredForLevel(
+            level
+        );
 
     return {
 
@@ -273,7 +323,7 @@ function getLevelProgress(){
 
 /* ============================================================
    COINS
-   ============================================================ */
+============================================================ */
 
 function addCoins(amount){
 
@@ -326,13 +376,23 @@ function spendCoins(amount){
 
 /* ============================================================
    GAME DATABASE
-   ============================================================ */
+============================================================ */
 
 UltimateWorld.games =
     uwLoad(
         UW_STORAGE.GAMES,
         {}
     );
+
+
+if(
+    !UltimateWorld.games ||
+    typeof UltimateWorld.games !== "object"
+){
+
+    UltimateWorld.games = {};
+
+}
 
 
 function createGameRecord(gameId){
@@ -382,7 +442,7 @@ function saveGames(){
 
 /* ============================================================
    GAME SESSION
-   ============================================================ */
+============================================================ */
 
 class GameSession{
 
@@ -409,9 +469,11 @@ class GameSession{
         this.level = 1;
 
         this.lives =
-            Number.isFinite(config.lives)
-                ? config.lives
-                : 3;
+            Number.isFinite(
+                config.lives
+            )
+            ? config.lives
+            : 3;
 
         this.maxLives =
             this.lives;
@@ -438,6 +500,8 @@ class GameSession{
 
         this.events = {};
 
+        this.startCount = 0;
+
         createGameRecord(
             this.id
         );
@@ -445,11 +509,20 @@ class GameSession{
     }
 
 
-    /* --------------------------------------------------------
-       EVENT SYSTEM
-    -------------------------------------------------------- */
+    /* ========================================================
+       EVENTS
+    ======================================================== */
 
     on(event, callback){
+
+        if(
+            typeof callback !==
+            "function"
+        ){
+
+            return this;
+
+        }
 
         if(
             !this.events[event]
@@ -462,6 +535,27 @@ class GameSession{
         this.events[event].push(
             callback
         );
+
+        return this;
+
+    }
+
+
+    off(event, callback){
+
+        if(
+            !this.events[event]
+        ){
+
+            return this;
+
+        }
+
+        this.events[event] =
+            this.events[event].filter(
+                listener =>
+                    listener !== callback
+            );
 
         return this;
 
@@ -486,7 +580,7 @@ class GameSession{
                 }catch(error){
 
                     console.error(
-                        "Game event error:",
+                        "Ultimate World game event error:",
                         error
                     );
 
@@ -495,17 +589,19 @@ class GameSession{
             }
         );
 
+        return this;
+
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        START
-    -------------------------------------------------------- */
+    ======================================================== */
 
     start(){
 
         if(this.running){
-            return;
+            return this;
         }
 
         this.running = true;
@@ -516,8 +612,14 @@ class GameSession{
 
         this.won = false;
 
+        this.time = 0;
+
         this.startedAt =
             Date.now();
+
+        this.endedAt = null;
+
+        this.startCount++;
 
         const record =
             createGameRecord(
@@ -535,6 +637,9 @@ class GameSession{
 
         UltimateWorld.profile.gamesPlayed++;
 
+        UltimateWorld.profile.favoriteGame =
+            this.id;
+
         saveProfile();
 
         saveGames();
@@ -543,12 +648,14 @@ class GameSession{
             "start"
         );
 
+        return this;
+
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        PAUSE
-    -------------------------------------------------------- */
+    ======================================================== */
 
     pause(){
 
@@ -557,7 +664,7 @@ class GameSession{
             this.finished
         ){
 
-            return;
+            return this;
 
         }
 
@@ -567,12 +674,14 @@ class GameSession{
             "pause"
         );
 
+        return this;
+
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        RESUME
-    -------------------------------------------------------- */
+    ======================================================== */
 
     resume(){
 
@@ -581,7 +690,7 @@ class GameSession{
             this.finished
         ){
 
-            return;
+            return this;
 
         }
 
@@ -591,12 +700,14 @@ class GameSession{
             "resume"
         );
 
+        return this;
+
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        SCORE
-    -------------------------------------------------------- */
+    ======================================================== */
 
     addScore(
         amount,
@@ -614,9 +725,12 @@ class GameSession{
         amount =
             Number(amount) || 0;
 
-        this.score += amount;
+        this.score +=
+            amount;
 
-        if(this.score < 0){
+        if(
+            this.score < 0
+        ){
 
             this.score = 0;
 
@@ -625,9 +739,14 @@ class GameSession{
         this.emit(
             "score",
             {
+
                 amount,
+
                 reason,
-                total:this.score
+
+                total:
+                    this.score
+
             }
         );
 
@@ -636,28 +755,37 @@ class GameSession{
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        COMBO
-    -------------------------------------------------------- */
+    ======================================================== */
 
     addCombo(){
 
-        this.combo++;
-
         if(
-            this.combo >
-            this.maxCombo
+            this.finished
         ){
 
-            this.maxCombo =
-                this.combo;
+            return this.combo;
 
         }
+
+        this.combo++;
+
+        this.maxCombo =
+            Math.max(
+                this.maxCombo,
+                this.combo
+            );
 
         this.emit(
             "combo",
             {
-                combo:this.combo
+                combo:
+                    this.combo,
+
+                multiplier:
+                    this.getComboMultiplier()
+
             }
         );
 
@@ -674,25 +802,43 @@ class GameSession{
             "combo-reset"
         );
 
+        return this;
+
     }
 
 
     getComboMultiplier(){
 
-        if(this.combo < 2){
+        if(
+            this.combo < 2
+        ){
+
             return 1;
+
         }
 
-        if(this.combo < 5){
+        if(
+            this.combo < 5
+        ){
+
             return 1.25;
+
         }
 
-        if(this.combo < 10){
+        if(
+            this.combo < 10
+        ){
+
             return 1.5;
+
         }
 
-        if(this.combo < 20){
+        if(
+            this.combo < 20
+        ){
+
             return 2;
+
         }
 
         return 3;
@@ -700,9 +846,9 @@ class GameSession{
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        LIVES
-    -------------------------------------------------------- */
+    ======================================================== */
 
     loseLife(){
 
@@ -725,13 +871,18 @@ class GameSession{
         this.emit(
             "life-lost",
             {
-                lives:this.lives
+                lives:
+                    this.lives
             }
         );
 
-        if(this.lives <= 0){
+        if(
+            this.lives <= 0
+        ){
 
-            this.end(false);
+            this.end(
+                false
+            );
 
         }
 
@@ -742,6 +893,14 @@ class GameSession{
 
     gainLife(){
 
+        if(
+            this.finished
+        ){
+
+            return this.lives;
+
+        }
+
         this.lives =
             Math.min(
                 this.maxLives,
@@ -751,7 +910,8 @@ class GameSession{
         this.emit(
             "life-gained",
             {
-                lives:this.lives
+                lives:
+                    this.lives
             }
         );
 
@@ -760,9 +920,9 @@ class GameSession{
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        LEVEL
-    -------------------------------------------------------- */
+    ======================================================== */
 
     setLevel(level){
 
@@ -777,9 +937,12 @@ class GameSession{
         this.emit(
             "level",
             {
-                level:this.level
+                level:
+                    this.level
             }
         );
+
+        return this.level;
 
     }
 
@@ -791,7 +954,8 @@ class GameSession{
         this.emit(
             "level",
             {
-                level:this.level
+                level:
+                    this.level
             }
         );
 
@@ -800,9 +964,9 @@ class GameSession{
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        TIMER
-    -------------------------------------------------------- */
+    ======================================================== */
 
     update(delta){
 
@@ -812,57 +976,81 @@ class GameSession{
             this.finished
         ){
 
-            return;
+            return this;
 
         }
 
-        this.time +=
+        delta =
             Math.max(
                 0,
                 Number(delta) || 0
             );
 
+        this.time +=
+            delta;
+
         this.emit(
             "update",
             {
+
                 delta,
-                time:this.time
+
+                time:
+                    this.time
+
             }
         );
 
+        return this;
+
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        WIN
-    -------------------------------------------------------- */
+    ======================================================== */
 
     win(){
 
-        if(this.finished){
-            return;
+        if(
+            this.finished
+        ){
+
+            return this;
+
         }
 
-        this.end(true);
+        this.end(
+            true
+        );
+
+        return this;
 
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        END
-    -------------------------------------------------------- */
+    ======================================================== */
 
     end(won = false){
 
-        if(this.finished){
-            return;
+        if(
+            this.finished
+        ){
+
+            return this;
+
         }
 
         this.finished = true;
 
         this.running = false;
 
-        this.won = !!won;
+        this.paused = false;
+
+        this.won =
+            !!won;
 
         this.endedAt =
             Date.now();
@@ -875,6 +1063,8 @@ class GameSession{
         record.totalScore +=
             this.score;
 
+        let newRecord = false;
+
         if(
             this.score >
             record.bestScore
@@ -883,15 +1073,10 @@ class GameSession{
             record.bestScore =
                 this.score;
 
+            newRecord = true;
+
             addXP(
                 XP_TABLE.NEW_RECORD
-            );
-
-            this.emit(
-                "record",
-                {
-                    score:this.score
-                }
             );
 
         }
@@ -906,7 +1091,9 @@ class GameSession{
 
         }
 
-        if(this.won){
+        if(
+            this.won
+        ){
 
             record.wins++;
 
@@ -914,15 +1101,11 @@ class GameSession{
 
             UltimateWorld.profile.streak++;
 
-            if(
-                UltimateWorld.profile.streak >
-                UltimateWorld.profile.longestStreak
-            ){
-
-                UltimateWorld.profile.longestStreak =
-                    UltimateWorld.profile.streak;
-
-            }
+            UltimateWorld.profile.longestStreak =
+                Math.max(
+                    UltimateWorld.profile.longestStreak,
+                    UltimateWorld.profile.streak
+                );
 
             addXP(
                 XP_TABLE.GAME_WIN
@@ -934,7 +1117,21 @@ class GameSession{
 
             UltimateWorld.profile.losses++;
 
-            UltimateWorld.profile.streak = 0;
+            UltimateWorld.profile.streak =
+                0;
+
+        }
+
+        if(
+            this.time > 0 &&
+            (
+                record.bestTime === null ||
+                this.time < record.bestTime
+            )
+        ){
+
+            record.bestTime =
+                this.time;
 
         }
 
@@ -948,13 +1145,38 @@ class GameSession{
 
         saveGames();
 
+        if(
+            this.score > 0
+        ){
+
+            submitLocalScore(
+                this.id,
+                this.score
+            );
+
+        }
+
         this.emit(
             "end",
             {
-                won:this.won,
-                score:this.score,
-                level:this.level,
-                time:this.time
+
+                won:
+                    this.won,
+
+                score:
+                    this.score,
+
+                level:
+                    this.level,
+
+                time:
+                    this.time,
+
+                maxCombo:
+                    this.maxCombo,
+
+                newRecord
+
             }
         );
 
@@ -962,34 +1184,42 @@ class GameSession{
             this
         );
 
+        return this;
+
     }
 
 }
 
 
 /* ============================================================
-   CURRENT SESSION
-   ============================================================ */
+   CURRENT GAME
+============================================================ */
 
 UltimateWorld.currentGame =
+    null;
+
+UltimateWorld.activeGame =
     null;
 
 
 function createGame(config){
 
-    UltimateWorld.currentGame =
+    const session =
         new GameSession(
             config
         );
 
-    return UltimateWorld.currentGame;
+    UltimateWorld.currentGame =
+        session;
+
+    return session;
 
 }
 
 
 /* ============================================================
    ACHIEVEMENTS
-   ============================================================ */
+============================================================ */
 
 const ACHIEVEMENTS = [
 
@@ -1055,6 +1285,14 @@ const ACHIEVEMENTS = [
         description:
             "Win 10 games in a row.",
         xp:1500
+    },
+
+    {
+        id:"combo-20",
+        title:"Combo Master",
+        description:
+            "Reach a 20x combo.",
+        xp:750
     }
 
 ];
@@ -1088,17 +1326,23 @@ function unlockAchievement(
                 achievementId
         );
 
-    if(!achievement){
+    if(
+        !achievement
+    ){
+
         return false;
+
     }
 
     UltimateWorld.achievements[
         achievementId
     ] = {
 
-        unlocked:true,
+        unlocked:
+            true,
 
-        date:Date.now()
+        date:
+            Date.now()
 
     };
 
@@ -1129,6 +1373,8 @@ function unlockAchievement(
 
     }
 
+    UltimateWorld.sound.success();
+
     return true;
 
 }
@@ -1136,7 +1382,7 @@ function unlockAchievement(
 
 /* ============================================================
    ACHIEVEMENT CHECKER
-   ============================================================ */
+============================================================ */
 
 function checkAchievements(
     session
@@ -1225,12 +1471,22 @@ function checkAchievements(
 
     }
 
+    if(
+        session.maxCombo >= 20
+    ){
+
+        unlockAchievement(
+            "combo-20"
+        );
+
+    }
+
 }
 
 
 /* ============================================================
    INPUT MANAGER
-   ============================================================ */
+============================================================ */
 
 class InputManager{
 
@@ -1332,8 +1588,12 @@ class InputManager{
                 const touch =
                     event.touches[0];
 
-                if(!touch){
+                if(
+                    !touch
+                ){
+
                     return;
+
                 }
 
                 this.touch.active =
@@ -1359,8 +1619,12 @@ class InputManager{
                 const touch =
                     event.touches[0];
 
-                if(!touch){
+                if(
+                    !touch
+                ){
+
                     return;
+
                 }
 
                 this.touch.x =
@@ -1403,8 +1667,8 @@ UltimateWorld.input =
 
 
 /* ============================================================
-   PARTICLE SYSTEM
-   ============================================================ */
+   PARTICLES
+============================================================ */
 
 class ParticleSystem{
 
@@ -1434,7 +1698,8 @@ class ParticleSystem{
 
             const angle =
                 Math.random() *
-                Math.PI * 2;
+                Math.PI *
+                2;
 
             const speed =
                 (
@@ -1445,6 +1710,10 @@ class ParticleSystem{
                     .4 +
                     Math.random()
                 );
+
+            const life =
+                options.life ||
+                .7;
 
             this.particles.push({
 
@@ -1460,13 +1729,10 @@ class ParticleSystem{
                     Math.sin(angle) *
                     speed,
 
-                life:
-                    options.life ||
-                    .7,
+                life,
 
                 maxLife:
-                    options.life ||
-                    .7,
+                    life,
 
                 size:
                     options.size ||
@@ -1486,7 +1752,9 @@ class ParticleSystem{
         for(
             let i =
                 this.particles.length - 1;
+
             i >= 0;
+
             i--
         ){
 
@@ -1557,7 +1825,8 @@ class ParticleSystem{
             }
         );
 
-        context.globalAlpha = 1;
+        context.globalAlpha =
+            1;
 
     }
 
@@ -1569,27 +1838,39 @@ UltimateWorld.particles =
 
 
 /* ============================================================
-   SOUND MANAGER
-   ------------------------------------------------------------
-   Uses Web Audio API.
-   No external sound files required.
-   ============================================================ */
+   SOUND
+============================================================ */
 
 class SoundManager{
 
     constructor(){
 
-        this.enabled = true;
+        this.enabled =
+            true;
 
-        this.context = null;
+        this.context =
+            null;
 
     }
 
 
     init(){
 
-        if(this.context){
+        if(
+            this.context
+        ){
+
+            if(
+                this.context.state ===
+                "suspended"
+            ){
+
+                this.context.resume();
+
+            }
+
             return;
+
         }
 
         try{
@@ -1618,14 +1899,22 @@ class SoundManager{
         volume = .04
     ){
 
-        if(!this.enabled){
+        if(
+            !this.enabled
+        ){
+
             return;
+
         }
 
         this.init();
 
-        if(!this.context){
+        if(
+            !this.context
+        ){
+
             return;
+
         }
 
         const oscillator =
@@ -1732,8 +2021,8 @@ UltimateWorld.sound =
 
 
 /* ============================================================
-   NOTIFICATIONS
-   ============================================================ */
+   TOAST SYSTEM
+============================================================ */
 
 UltimateWorld.toast =
     function(message){
@@ -1743,7 +2032,9 @@ UltimateWorld.toast =
                 "toast"
             );
 
-        if(!element){
+        if(
+            !element
+        ){
 
             console.log(
                 "[Ultimate World]",
@@ -1782,23 +2073,23 @@ UltimateWorld.toast =
 
 /* ============================================================
    DAILY REWARD
-   ============================================================ */
+============================================================ */
 
 function claimDailyReward(){
 
-    const key =
-        "uw_daily_reward";
-
     const previous =
         uwLoad(
-            key,
+            UW_STORAGE.DAILY,
             null
         );
 
     const today =
         new Date()
             .toISOString()
-            .slice(0,10);
+            .slice(
+                0,
+                10
+            );
 
     if(
         previous === today
@@ -1808,14 +2099,15 @@ function claimDailyReward(){
 
             claimed:false,
 
-            reason:"already-claimed"
+            reason:
+                "already-claimed"
 
         };
 
     }
 
     uwSave(
-        key,
+        UW_STORAGE.DAILY,
         today
     );
 
@@ -1831,9 +2123,11 @@ function claimDailyReward(){
 
         claimed:true,
 
-        xp:XP_TABLE.DAILY_BONUS,
+        xp:
+            XP_TABLE.DAILY_BONUS,
 
-        coins:100
+        coins:
+            100
 
     };
 
@@ -1842,9 +2136,11 @@ function claimDailyReward(){
 
 /* ============================================================
    FAVORITES
-   ============================================================ */
+============================================================ */
 
-function toggleFavorite(gameId){
+function toggleFavorite(
+    gameId
+){
 
     const record =
         createGameRecord(
@@ -1861,7 +2157,9 @@ function toggleFavorite(gameId){
 }
 
 
-function isFavorite(gameId){
+function isFavorite(
+    gameId
+){
 
     const record =
         createGameRecord(
@@ -1874,13 +2172,17 @@ function isFavorite(gameId){
 
 
 /* ============================================================
-   GAME STATISTICS
-   ============================================================ */
+   STATISTICS
+============================================================ */
 
-function getGameStats(gameId){
+function getGameStats(
+    gameId
+){
 
     return {
-        ...createGameRecord(gameId)
+        ...createGameRecord(
+            gameId
+        )
     };
 
 }
@@ -1896,17 +2198,26 @@ function getAllGameStats(){
 
 
 /* ============================================================
-   LEADERBOARD FOUNDATION
-   ------------------------------------------------------------
-   Local leaderboard now.
-   Online multiplayer can plug into this later.
-   ============================================================ */
+   LEADERBOARD
+============================================================ */
 
 UltimateWorld.leaderboard =
     uwLoad(
-        "uw_local_leaderboard",
+        UW_STORAGE.LEADERBOARD,
         []
     );
+
+
+if(
+    !Array.isArray(
+        UltimateWorld.leaderboard
+    )
+){
+
+    UltimateWorld.leaderboard =
+        [];
+
+}
 
 
 function submitLocalScore(
@@ -1940,14 +2251,13 @@ function submitLocalScore(
     );
 
     UltimateWorld.leaderboard =
-        UltimateWorld.leaderboard
-            .slice(
-                0,
-                100
-            );
+        UltimateWorld.leaderboard.slice(
+            0,
+            100
+        );
 
     uwSave(
-        "uw_local_leaderboard",
+        UW_STORAGE.LEADERBOARD,
         UltimateWorld.leaderboard
     );
 
@@ -1971,9 +2281,10 @@ function getLeaderboard(
 
 /* ============================================================
    GAME REGISTRY
-   ============================================================ */
+============================================================ */
 
-UltimateWorld.registry = {};
+UltimateWorld.registry =
+    UltimateWorld.registry || {};
 
 
 function registerGame(
@@ -1996,11 +2307,19 @@ function registerGame(
         config.id
     ] = {
 
-        config,
+        config:{
+
+            ...config
+
+        },
 
         gameClass
 
     };
+
+    return UltimateWorld.registry[
+        config.id
+    ];
 
 }
 
@@ -2009,8 +2328,12 @@ function getRegisteredGame(
     id
 ){
 
-    return UltimateWorld.registry[id] ||
-        null;
+    return (
+        UltimateWorld.registry[
+            id
+        ] ||
+        null
+    );
 
 }
 
@@ -2026,7 +2349,7 @@ function getRegisteredGames(){
 
 /* ============================================================
    GAME FACTORY
-   ============================================================ */
+============================================================ */
 
 function launchRegisteredGame(
     id,
@@ -2038,10 +2361,12 @@ function launchRegisteredGame(
             id
         );
 
-    if(!entry){
+    if(
+        !entry
+    ){
 
         console.warn(
-            "Game not registered:",
+            "Ultimate World: Game not registered:",
             id
         );
 
@@ -2049,13 +2374,32 @@ function launchRegisteredGame(
 
     }
 
-    const instance =
-        new entry.gameClass(
-            {
-                ...entry.config,
-                ...options
-            }
+    let instance = null;
+
+    try{
+
+        instance =
+            new entry.gameClass(
+                {
+
+                    ...entry.config,
+
+                    ...options
+
+                }
+            );
+
+    }catch(error){
+
+        console.error(
+            "Ultimate World: Failed to create game:",
+            id,
+            error
         );
+
+        return null;
+
+    }
 
     UltimateWorld.activeGame =
         instance;
@@ -2066,27 +2410,32 @@ function launchRegisteredGame(
 
 
 /* ============================================================
-   PERFORMANCE CLOCK
-   ============================================================ */
+   CLOCK
+============================================================ */
 
 class GameClock{
 
     constructor(){
 
-        this.running = false;
+        this.running =
+            false;
 
-        this.last = 0;
+        this.last =
+            0;
 
-        this.elapsed = 0;
+        this.elapsed =
+            0;
 
-        this.delta = 0;
+        this.delta =
+            0;
 
     }
 
 
     start(){
 
-        this.running = true;
+        this.running =
+            true;
 
         this.last =
             performance.now();
@@ -2096,16 +2445,20 @@ class GameClock{
 
     stop(){
 
-        this.running = false;
+        this.running =
+            false;
 
     }
 
 
     update(){
 
-        if(!this.running){
+        if(
+            !this.running
+        ){
 
-            this.delta = 0;
+            this.delta =
+                0;
 
             return 0;
 
@@ -2117,11 +2470,14 @@ class GameClock{
         this.delta =
             Math.min(
                 .1,
-                (now - this.last) /
-                1000
+                (
+                    now -
+                    this.last
+                ) / 1000
             );
 
-        this.last = now;
+        this.last =
+            now;
 
         this.elapsed +=
             this.delta;
@@ -2133,9 +2489,11 @@ class GameClock{
 
     reset(){
 
-        this.elapsed = 0;
+        this.elapsed =
+            0;
 
-        this.delta = 0;
+        this.delta =
+            0;
 
         this.last =
             performance.now();
@@ -2150,13 +2508,22 @@ UltimateWorld.clock =
 
 
 /* ============================================================
-   COLLISION HELPERS
-   ============================================================ */
+   COLLISION
+============================================================ */
 
 function rectCollision(
     a,
     b
 ){
+
+    if(
+        !a ||
+        !b
+    ){
+
+        return false;
+
+    }
 
     return (
 
@@ -2182,11 +2549,22 @@ function circleCollision(
     b
 ){
 
+    if(
+        !a ||
+        !b
+    ){
+
+        return false;
+
+    }
+
     const dx =
-        a.x - b.x;
+        a.x -
+        b.x;
 
     const dy =
-        a.y - b.y;
+        a.y -
+        b.y;
 
     const distance =
         Math.sqrt(
@@ -2204,14 +2582,20 @@ function circleCollision(
 
 
 /* ============================================================
-   RANDOM HELPERS
-   ============================================================ */
+   RANDOM
+============================================================ */
 
-function random(min = 0,max = 1){
+function random(
+    min = 0,
+    max = 1
+){
 
     return (
         Math.random() *
-        (max - min)
+        (
+            max -
+            min
+        )
     ) + min;
 
 }
@@ -2250,8 +2634,8 @@ function clamp(
 
 
 /* ============================================================
-   COLOR HELPERS
-   ============================================================ */
+   NEON COLORS
+============================================================ */
 
 function randomNeon(){
 
@@ -2267,7 +2651,9 @@ function randomNeon(){
 
         "#ffd45a",
 
-        "#ff6b6b"
+        "#ff6b6b",
+
+        "#9d5cff"
 
     ];
 
@@ -2283,9 +2669,10 @@ function randomNeon(){
 
 /* ============================================================
    SCREEN SHAKE
-   ============================================================ */
+============================================================ */
 
-let shakeAmount = 0;
+let shakeAmount =
+    0;
 
 
 function screenShake(
@@ -2319,11 +2706,17 @@ function applyScreenShake(
     element
 ){
 
-    if(!element){
+    if(
+        !element
+    ){
+
         return;
+
     }
 
-    if(shakeAmount <= 0){
+    if(
+        shakeAmount <= 0
+    ){
 
         element.style.transform =
             "";
@@ -2345,14 +2738,14 @@ function applyScreenShake(
         );
 
     element.style.transform =
-        `translate(${x}px,${y}px)`;
+        `translate(${x}px, ${y}px)`;
 
 }
 
 
 /* ============================================================
    PROFILE API
-   ============================================================ */
+============================================================ */
 
 UltimateWorld.getProfile =
     function(){
@@ -2367,6 +2760,9 @@ UltimateWorld.getProfile =
 UltimateWorld.getLevelProgress =
     getLevelProgress;
 
+UltimateWorld.xpRequiredForLevel =
+    xpRequiredForLevel;
+
 UltimateWorld.addXP =
     addXP;
 
@@ -2379,7 +2775,7 @@ UltimateWorld.spendCoins =
 
 /* ============================================================
    PUBLIC GAME API
-   ============================================================ */
+============================================================ */
 
 UltimateWorld.GameSession =
     GameSession;
@@ -2389,6 +2785,21 @@ UltimateWorld.createGame =
 
 UltimateWorld.registerGame =
     registerGame;
+
+
+/*
+ * IMPORTANT:
+ *
+ * These two exports are required by
+ * game.html and GameVerse.
+ */
+
+UltimateWorld.getRegisteredGame =
+    getRegisteredGame;
+
+UltimateWorld.getRegisteredGames =
+    getRegisteredGames;
+
 
 UltimateWorld.launchGame =
     launchRegisteredGame;
@@ -2441,30 +2852,45 @@ UltimateWorld.randomNeon =
 UltimateWorld.screenShake =
     screenShake;
 
+UltimateWorld.updateScreenShake =
+    updateScreenShake;
+
 UltimateWorld.applyScreenShake =
     applyScreenShake;
 
 
 /* ============================================================
    BUILT-IN DEMO GAME
-   ------------------------------------------------------------
-   This proves the engine is actually connected.
-   ============================================================ */
+============================================================ */
 
 class NeonRushEngineGame{
 
-    constructor(){
+    constructor(config = {}){
+
+        this.config =
+            config;
 
         this.session =
             createGame({
 
-                id:"neon-rush",
+                id:
+                    config.id ||
+                    "neon-rush",
 
-                name:"Neon Rush",
+                name:
+                    config.name ||
+                    "Neon Rush",
 
-                category:"Racing",
+                category:
+                    config.category ||
+                    "Racing",
 
-                lives:3
+                lives:
+                    Number.isFinite(
+                        config.lives
+                    )
+                    ? config.lives
+                    : 3
 
             });
 
@@ -2474,7 +2900,11 @@ class NeonRushEngineGame{
 
             y:.75,
 
-            speed:.8
+            speed:.8,
+
+            width:.06,
+
+            height:.08
 
         };
 
@@ -2482,13 +2912,18 @@ class NeonRushEngineGame{
 
         this.spawnTimer = 0;
 
-        this.running = false;
+        this.running =
+            false;
+
+        this.distance =
+            0;
 
         this.session.on(
             "start",
             () => {
 
-                this.running = true;
+                this.running =
+                    true;
 
             }
         );
@@ -2497,7 +2932,8 @@ class NeonRushEngineGame{
             "end",
             () => {
 
-                this.running = false;
+                this.running =
+                    false;
 
             }
         );
@@ -2518,7 +2954,8 @@ class NeonRushEngineGame{
 
         if(
             !this.running ||
-            this.session.paused
+            this.session.paused ||
+            this.session.finished
         ){
 
             return;
@@ -2529,33 +2966,56 @@ class NeonRushEngineGame{
             delta
         );
 
+        this.distance +=
+            delta;
+
         this.spawnTimer +=
             delta;
 
-        if(
-            this.spawnTimer >
+
+        /*
+         * Difficulty increases with level.
+         */
+
+        const spawnDelay =
             Math.max(
-                .35,
-                1.1 -
+                .3,
+                1.05 -
                 this.session.level *
-                .04
-            )
+                .035
+            );
+
+
+        if(
+            this.spawnTimer >=
+            spawnDelay
         ){
 
-            this.spawnTimer = 0;
+            this.spawnTimer =
+                0;
 
             this.obstacles.push({
 
-                x:random(
-                    .2,
-                    .8
-                ),
+                x:
+                    random(
+                        .12,
+                        .88
+                    ),
 
-                y:-.1,
+                y:
+                    -.1,
 
-                width:.06,
+                width:
+                    random(
+                        .045,
+                        .08
+                    ),
 
-                height:.08,
+                height:
+                    random(
+                        .06,
+                        .1
+                    ),
 
                 speed:
                     .28 +
@@ -2565,6 +3025,7 @@ class NeonRushEngineGame{
             });
 
         }
+
 
         this.obstacles.forEach(
             obstacle => {
@@ -2576,53 +3037,127 @@ class NeonRushEngineGame{
             }
         );
 
-        this.obstacles =
-            this.obstacles.filter(
-                obstacle =>
-                    obstacle.y < 1.2
+
+        /*
+         * Remove passed obstacles
+         * and reward the player.
+         */
+
+        for(
+            let i =
+                this.obstacles.length - 1;
+
+            i >= 0;
+
+            i--
+        ){
+
+            const obstacle =
+                this.obstacles[i];
+
+            if(
+                obstacle.y >
+                1.1
+            ){
+
+                this.obstacles.splice(
+                    i,
+                    1
+                );
+
+                this.session.addScore(
+                    5
+                );
+
+            }
+
+        }
+
+
+        /*
+         * Gradually level up.
+         */
+
+        const calculatedLevel =
+            Math.max(
+                1,
+                Math.floor(
+                    this.distance /
+                    15
+                ) + 1
             );
+
+        if(
+            calculatedLevel >
+            this.session.level
+        ){
+
+            this.session.setLevel(
+                calculatedLevel
+            );
+
+            UltimateWorld.sound.success();
+
+        }
 
     }
 
 }
 
 
+/* ============================================================
+   REGISTER NEON RUSH
+============================================================ */
+
 registerGame(
+
     {
 
-        id:"neon-rush",
+        id:
+            "neon-rush",
 
-        name:"Neon Rush",
+        name:
+            "Neon Rush",
 
-        category:"Racing",
+        category:
+            "Racing",
 
         description:
-            "High-speed neon arcade racing."
+            "High-speed neon arcade racing.",
+
+        icon:
+            "🏎️",
+
+        featured:
+            true
 
     },
 
     NeonRushEngineGame
+
 );
 
 
 /* ============================================================
    ENGINE READY
-   ============================================================ */
+============================================================ */
 
-UltimateWorld.ready = true;
+UltimateWorld.ready =
+    true;
 
-UltimateWorld.toast(
-    "Ultimate World Game Engine ready."
+UltimateWorld.engine.status =
+    "ready";
+
+
+console.log(
+    "%cULTIMATE WORLD",
+    "font-size:24px;font-weight:900;"
 );
 
 console.log(
-    "%cULTIMATE WORLD GAME ENGINE",
-    "font-size:20px;font-weight:900;"
-);
-
-console.log(
-    "Version:",
-    UltimateWorld.version
+    "%cGAME ENGINE v" +
+    UltimateWorld.version,
+    "font-size:14px;font-weight:800;"
 );
 
 console.log(
@@ -2633,10 +3168,15 @@ console.log(
 );
 
 console.log(
-    "Engine ready."
+    "Game registry:",
+    UltimateWorld.getRegisteredGames()
+);
+
+console.log(
+    "Ultimate World Game Engine is READY."
 );
 
 
 /* ============================================================
-   END
+   END OF ENGINE
 ============================================================ */
